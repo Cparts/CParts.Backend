@@ -16,3 +16,5 @@ CParts\.Infrastructure\.Data/obj/
 CParts\.Services\.Abstractions/obj/
 
 CParts\.Web/obj/
+
+CParts\.BootStrapper/obj/

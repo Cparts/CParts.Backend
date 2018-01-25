@@ -13,8 +13,8 @@ namespace CParts.Infrastructure.Data
         where TEntity : class
         where TKey : IEquatable<TKey>
     {
-        private readonly CPartsContext _context;
-        protected CPartsContext Context => _context;
+        private readonly ICPartsContext _context;
+        protected ICPartsContext Context => _context;
 
         private readonly DbSet<TEntity> _dbSet;
         protected DbSet<TEntity> DbSet => _dbSet;

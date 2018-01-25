@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CParts.Bootstrapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -23,9 +24,8 @@ namespace CParts.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.RegisterDomain();
-            services.RegisterServices();
             services.AddMvc();
+            services.BootstrapDI(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -36,6 +36,8 @@ namespace CParts.Web
                 app.UseDeveloperExceptionPage();
             }
 
+            app.BootstrapMiddleware(Configuration);
+            
             app.UseMvc();
         }
     }

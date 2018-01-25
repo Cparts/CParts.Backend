@@ -16,7 +16,7 @@ namespace CParts.Domain.Abstractions
         Task<bool> DeleteAsync(TKey entityKey);
         Task<ICollection<TEntity>> AllAsync(bool mapNavigationProperties = false);
         Task<TEntity> FindByKeyAsync(TKey entityKey, bool mapNavigationProperties = false);
-        //TODO: Change. Can lead to unpredictable results like returning IQueryable from method which is undesirable
+        //TODO: Fix. Can lead to unpredictable results like returning IQueryable from method which is undesirable
         Task<TResult> SelectAsync<TResult>(Func<IQueryable<TEntity>, Task<TResult>> query);
     }
 }
