@@ -24,6 +24,8 @@ namespace CParts.Bootstrapper
                 .AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<CPartsContext>()
                 .AddDefaultTokenProviders();
+            
+            services.AddScoped<ICPartsContext>(provider => provider.GetRequiredService<CPartsContext>());
 
             return services;
         }

@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CParts.Infrastructure.Data
 {
+    public class CPartsContext : IdentityDbContext<ApplicationUser, IdentityRole, string>, ICPartsContext
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
