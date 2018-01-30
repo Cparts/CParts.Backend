@@ -1,14 +1,12 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-using CParts.Domain.Abstractions;
+﻿using CParts.Domain.Abstractions.Contexts;
 using CParts.Domain.Core;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace CParts.Infrastructure.Data
+namespace CParts.Infrastructure.Data.Contexts
 {
-    public class CPartsContext : IdentityDbContext<ApplicationUser, IdentityRole, string>, ICPartsContext
+    public class InternalDataDbContext : IdentityDbContext<ApplicationUser, IdentityRole, string>, IInternalDataDbContext
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -18,6 +16,11 @@ namespace CParts.Infrastructure.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+        }
+
+        public InternalDataDbContext(DbContextOptions<InternalDataDbContext> options) : base(options)
+        {
+            
         }
     }
 }

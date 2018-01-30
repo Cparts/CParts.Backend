@@ -2,9 +2,9 @@
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
-namespace CParts.Domain.Abstractions
+namespace CParts.Domain.Abstractions.Contexts
 {
-    public interface ICPartsContext
+    public interface IDbContext
     {
         int SaveChanges();
         Task<int> SaveChangesAsync(CancellationToken token = new CancellationToken());

@@ -4,22 +4,24 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using CParts.Domain.Abstractions;
+using CParts.Domain.Abstractions.Contexts;
+using CParts.Domain.Abstractions.Repositories;
 using CParts.Domain.Core;
 using Microsoft.EntityFrameworkCore;
 
 namespace CParts.Infrastructure.Data
 {
-    public abstract class RepositoryBase<TEntity, TKey> : IRepository<TEntity, TKey>
+    public abstract class CrudRepositoryBase<TEntity, TKey> : ReadRepositoryBase<TEntity>, ICrudRepository<TEntity, TKey>
         where TEntity : class
         where TKey : IEquatable<TKey>
     {
-        private readonly ICPartsContext _context;
-        protected ICPartsContext Context => _context;
+        private readonly IDbContext _context;
+        protected IDbContext Context => _context;
 
         private readonly DbSet<TEntity> _dbSet;
         protected DbSet<TEntity> DbSet => _dbSet;
 
-        protected RepositoryBase(CPartsContext context)
+        protected CrudRepositoryBase(IDbContext context)
         {
             _context = context;
             _dbSet = _context.Set<TEntity>();
@@ -59,18 +61,6 @@ namespace CParts.Infrastructure.Data
             return true;
         }
 
-        public virtual async Task<ICollection<TEntity>> AllAsync(bool mapNavigationProperties = false)
-        {
-            var fullSet = DbSet.AsNoTracking();
-
-            if (mapNavigationProperties)
-            {
-                fullSet = MapNavigationProperties(fullSet);
-            }
-
-            return await fullSet.ToListAsync();
-        }
-
         public virtual async Task<TEntity> FindByKeyAsync(TKey entityKey, bool mapNavigationProperties = false)
         {
             var query = DbSet.AsNoTracking()
@@ -82,11 +72,6 @@ namespace CParts.Infrastructure.Data
             }
 
             return await query.SingleOrDefaultAsync();
-        }
-
-        public virtual async Task<TResult> SelectAsync<TResult>(Func<IQueryable<TEntity>, Task<TResult>> query)
-        {
-            return await query(DbSet.AsNoTracking());
         }
 
         public virtual async Task<int> SaveChangesAsync()

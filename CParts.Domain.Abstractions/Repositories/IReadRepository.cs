@@ -1,21 +1,14 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CParts.Domain.Abstractions
+namespace CParts.Domain.Abstractions.Repositories
 {
-    public interface IRepository<TEntity, in TKey>
+    public interface IReadRepository<TEntity>
     where TEntity : class
-    where TKey : IEquatable<TKey>
     {
-        Task CreateAsync(TEntity entity);
-        Task UpdateAsync(TEntity entity);
-        Task DeleteAsync(TEntity entity);
-        Task<bool> DeleteAsync(TKey entityKey);
         Task<ICollection<TEntity>> AllAsync(bool mapNavigationProperties = false);
-        Task<TEntity> FindByKeyAsync(TKey entityKey, bool mapNavigationProperties = false);
         //TODO: Fix. Can lead to unpredictable results like returning IQueryable from method which is undesirable
         Task<TResult> SelectAsync<TResult>(Func<IQueryable<TEntity>, Task<TResult>> query);
     }
