@@ -1,35 +1,39 @@
-﻿namespace CParts.Domain.Core.Model
+﻿using System.Collections.Generic;
+
+namespace CParts.Domain.Core.Model
 {
     public partial class Country
     {
         /// <summary>
         /// COU_ID
         /// </summary>
-        public short CouId { get; set; }
+        public short Id { get; set; }
 
         /// <summary>
         /// COU_CC
         /// </summary>
-        public string CouCc { get; set; }
+        public string CC { get; set; }
 
         /// <summary>
         /// COU_DES_ID
         /// </summary>
-        public int? CouDesId { get; set; }
+        public int? DesignationId { get; set; }
+        
+        public Designation Designation { get; set; }
 
         /// <summary>
         /// COU_CURRENCY_CODE
         /// </summary>
-        public string CouCurrencyCode { get; set; }
+        public string CurrencyCode { get; set; }
 
         /// <summary>
         /// COU_ISO_2
         /// </summary>
-        public string CouIso2 { get; set; }
+        public string Iso2 { get; set; }
 
         /// <summary>
         /// COU_IS_GROUP
         /// </summary>
-        public short CouIsGroup { get; set; }
+        public short IsGroup { get; set; }
     }
 }

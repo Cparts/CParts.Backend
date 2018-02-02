@@ -5,21 +5,24 @@
         /// <summary>
         /// LA_ID
         /// </summary>
-        public int LaId { get; set; }
+        public int Id { get; set; }
 
         /// <summary>
         /// LA_ART_ID
         /// </summary>
-        public int LaArtId { get; set; }
+        public int ArticleId { get; set; }
+        
+        public Article Article { get; set; }
 
+        //TODO: Investigate LA_GA_ID
         /// <summary>
         /// LA_GA_ID
         /// </summary>
-        public int LaGaId { get; set; }
+        public int GaId { get; set; }
 
         /// <summary>
         /// LA_SORT
         /// </summary>
-        public int LaSort { get; set; }
+        public int Sort { get; set; }
     }
 }

@@ -1,25 +1,25 @@
 ﻿namespace CParts.Domain.Core.Model
 {
-    public partial class Brands
+    public partial class Brand
     {
         /// <summary>
         /// BRA_ID
         /// </summary>
-        public short BraId { get; set; }
+        public short Id { get; set; }
 
         /// <summary>
         /// BRA_MFC_CODE
         /// </summary>
-        public string BraMfcCode { get; set; }
+        public string MfcCode { get; set; }
 
         /// <summary>
         /// BRA_BRAND
         /// </summary>
-        public string BraBrand { get; set; }
+        public string Name { get; set; }
 
         /// <summary>
         /// BRA_MF_NR
         /// </summary>
-        public int? BraMfNr { get; set; }
+        public int? MfNr { get; set; }
     }
 }

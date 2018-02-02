@@ -2,4 +2,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CParts.Domain.Abstractions\CParts.Domain.Abstractions.csproj" />
+  </ItemGroup>
 </Project>

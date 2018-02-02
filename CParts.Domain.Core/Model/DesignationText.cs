@@ -1,14 +1,16 @@
-﻿namespace CParts.Domain.Core.Model
+﻿using System.Collections.Generic;
+
+namespace CParts.Domain.Core.Model
 {
-    public partial class TextModuleText
+    public partial class DesignationText
     {
         /// <summary>
-        /// TMD_ID
+        /// TEX_ID
         /// </summary>
         public int Id { get; set; }
-        
+
         /// <summary>
-        /// TMT_TEXT
+        /// TEX_TEXT
         /// </summary>
         public string Text { get; set; }
     }

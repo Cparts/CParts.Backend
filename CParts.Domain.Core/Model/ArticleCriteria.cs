@@ -5,30 +5,44 @@
         /// <summary>
         /// ACR_ART_ID
         /// </summary>
-        public int Id { get; set; }
+        public int ArticleId { get; set; }
+
+        public Article Article { get; set; }
+
+        //TODO: Investigate ACR_GA_ID
         /// <summary>
         /// ACR_GA_ID
         /// </summary>
         public int AcrGaId { get; set; }
+
         /// <summary>
         /// ACR_SORT
         /// </summary>
-        public short AcrSort { get; set; }
+        public short Sort { get; set; }
+
         /// <summary>
         /// ACR_CRI_ID
         /// </summary>
-        public short AcrCriId { get; set; }
+        public short CriteriaId { get; set; }
+
+        public Criteria Criteria { get; set; }
+
         /// <summary>
         /// ACR_VALUE
         /// </summary>
-        public string AcrValue { get; set; }
+        public string Value { get; set; }
+
         /// <summary>
         /// ACR_KV_DES_ID
         /// </summary>
-        public int? AcrKvDesId { get; set; }
+        public int? KvDesignationId { get; set; }
+
+        public Designation KvDesignation { get; set; }
+
         /// <summary>
         /// ACR_DISPLAY
         /// </summary>
-        public short? AcrDisplay { get; set; }
+        public short? Display { get; set; }
+        
     }
 }

@@ -7,14 +7,14 @@ namespace CParts.Domain.Abstractions.Contexts
     {
         DbSet<ArticleInfo> ArticleInfo { get; set; }
         DbSet<Article> Articles { get; set; }
-        DbSet<ArtLookup> ArtLookup { get; set; }
-        DbSet<Brands> Brands { get; set; }
+        DbSet<ArticleLookup> ArtLookup { get; set; }
+        DbSet<Brand> Brands { get; set; }
         DbSet<Country> Countries { get; set; }
-        DbSet<CountryDesignation> CountryDesignations { get; set; }
+//        DbSet<CountryDesignation> CountryDesignations { get; set; }
         DbSet<Criteria> Criterias { get; set; }
         DbSet<Designation> Designations { get; set; }
-        DbSet<DesText> DesTexts { get; set; }
-        DbSet<DesTextOriginal> DesTextsOriginal { get; set; }
+        DbSet<DesignationText> DesTexts { get; set; }
+        DbSet<DesignationTextOriginal> DesTextsOriginal { get; set; }
         DbSet<DocType> DocTypes { get; set; }
         DbSet<Engine> Engines { get; set; }
         DbSet<Graphic> Graphics { get; set; }

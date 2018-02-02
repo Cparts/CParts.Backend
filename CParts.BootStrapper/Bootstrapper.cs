@@ -1,16 +1,20 @@
-﻿using CParts.Domain.Abstractions;
-using CParts.Domain.Abstractions.Contexts;
+﻿using CParts.Domain.Abstractions.Contexts;
+using CParts.Domain.Abstractions.Repositories;
 using CParts.Domain.Core;
 using CParts.Framework.Options;
-using CParts.Infrastructure.Data;
+using CParts.Infrastructure.Business;
 using CParts.Infrastructure.Data.Contexts;
+using CParts.Infrastructure.Data.Repositories;
+using CParts.Infrastructure.Data.Repositories.Base;
+using CParts.Services.Abstractions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using MySql.Data.EntityFrameworkCore.Extensions;
 
-namespace CParts.Bootstrapper
+namespace CParts.BootStrapper
 {
     public static class Bootstrapper
     {
@@ -36,12 +40,12 @@ namespace CParts.Bootstrapper
                 });
 
             //Identity and entity framework setup
-            services.AddEntityFrameworkMySql()
+            services.AddEntityFrameworkMySQL()
                 .AddDbContext<PartsDataDbContext>(options =>
-                    options.UseMySql(
+                    options.UseMySQL(
                         connectionSettingsSection.GetSection(nameof(ConnectionStrings))["PartsData:Test"]))
                 .AddDbContext<InternalDataDbContext>(options =>
-                    options.UseMySql(
+                    options.UseMySQL(
                         connectionSettingsSection.GetSection(nameof(ConnectionStrings))["InternalData:Test"]))
                 .AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<InternalDataDbContext>()
@@ -52,6 +56,13 @@ namespace CParts.Bootstrapper
             services.AddScoped<IInternalDataDbContext>(provider =>
                 provider.GetRequiredService<InternalDataDbContext>());
 
+            services.AddTransient(typeof(IReadRepository<>), typeof(PartsReadRepository<>));
+            services.AddTransient<IArtLookupService, ArtLookupService>();
+            services.AddTransient<IBrandsService, BrandsService>();
+            services.AddTransient<IManufacturersService, ManufacturersService>();
+            services.AddTransient<IModelsService, ModelsService>();
+            services.AddTransient<ITypesService, TypesService>();
+            
             return services;
         }
 

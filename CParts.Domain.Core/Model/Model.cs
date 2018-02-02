@@ -1,45 +1,52 @@
-﻿namespace CParts.Domain.Core.Model
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace CParts.Domain.Core.Model
 {
     public partial class Model
     {
         /// <summary>
         /// MOD_ID
         /// </summary>
-        public int ModId { get; set; }
+        public int Id { get; set; }
 
         /// <summary>
         /// MOD_MFA_ID
         /// </summary>
-        public short? ModMfaId { get; set; }
+        public short? ManufacturerId { get; set; }
+        
+        public Manufacturer Manufacturer { get; set; }
 
         /// <summary>
         /// MOD_CDS_ID
         /// </summary>
-        public int? ModCdsId { get; set; }
+        public int? CountryDesignationId { get; set; }
+        
+        [NotMapped]
+        public CountryDesignation CountryDesignation { get; set; }
 
         /// <summary>
         /// MOD_PCON_START
         /// </summary>
-        public int? ModPconStart { get; set; }
+        public int? PconStart { get; set; }
 
         /// <summary>
         /// MOD_PCON_END
         /// </summary>
-        public int? ModPconEnd { get; set; }
+        public int? PconEnd { get; set; }
 
         /// <summary>
         /// MOD_PC
         /// </summary>
-        public short? ModPc { get; set; }
+        public short? Pc { get; set; }
 
         /// <summary>
         /// MOD_CV
         /// </summary>
-        public short? ModCv { get; set; }
+        public short? Cv { get; set; }
 
         /// <summary>
         /// MOD_AXL
         /// </summary>
-        public short? ModAxl { get; set; }
+        public short? Axl { get; set; }
     }
 }

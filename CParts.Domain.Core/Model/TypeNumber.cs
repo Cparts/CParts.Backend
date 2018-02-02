@@ -5,31 +5,33 @@
         /// <summary>
         /// TYN_TYP_ID
         /// </summary>
-        public int TynTypId { get; set; }
+        public int TypeId { get; set; }
+        
+        public Type Type { get; set; }
 
         /// <summary>
         /// TYN_SEARCH_TEXT
         /// </summary>
-        public string TynSearchText { get; set; }
+        public string SearchText { get; set; }
 
         /// <summary>
         /// TYN_KIND
         /// </summary>
-        public short TynKind { get; set; }
+        public short Kind { get; set; }
 
         /// <summary>
         /// TYN_DISPLAY_NR
         /// </summary>
-        public string TynDisplayNr { get; set; }
+        public string DisplayNumber { get; set; }
 
         /// <summary>
         /// TYN_GOP_NR
         /// </summary>
-        public string TynGopNr { get; set; }
+        public string GopNumber { get; set; }
 
         /// <summary>
         /// TYN_GOP_START
         /// </summary>
-        public int TynGopStart { get; set; }
+        public int GopStart { get; set; }
     }
 }

@@ -5,11 +5,14 @@
         /// <summary>
         /// LGS_STR_ID
         /// </summary>
-        public int LgsStrId { get; set; }
+        public int SearchTreeId { get; set; }
+        
+        public SearchTree SearchTree { get; set; }
 
+        //TODO: Investigate LGS_GA_ID
         /// <summary>
         /// LGS_GA_ID
         /// </summary>
-        public int LgsGaId { get; set; }
+        public int GaId { get; set; }
     }
 }

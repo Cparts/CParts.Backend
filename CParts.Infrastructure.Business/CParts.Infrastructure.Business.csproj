@@ -5,6 +5,11 @@
   <ItemGroup>
     <ProjectReference Include="..\CParts.Domain.Abstractions\CParts.Domain.Abstractions.csproj" />
     <ProjectReference Include="..\CParts.Domain.Core\CParts.Domain.Core.csproj" />
+    <ProjectReference Include="..\CParts.Domain.Core\CParts.Domain.Core.csproj" />
+    <ProjectReference Include="..\CParts.Framework\CParts.Framework.csproj" />
     <ProjectReference Include="..\CParts.Services.Abstractions\CParts.Services.Abstractions.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="LinqKit.Microsoft.EntityFrameworkCore" Version="1.1.13" />
   </ItemGroup>
 </Project>

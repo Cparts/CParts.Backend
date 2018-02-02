@@ -5,26 +5,30 @@
         /// <summary>
         /// LTE_TYP_ID
         /// </summary>
-        public int LteTypId { get; set; }
+        public int TypeId { get; set; }
+        
+        public Type Type { get; set; }
 
         /// <summary>
         /// LTE_NR
         /// </summary>
-        public short LteNr { get; set; }
+        public short Number { get; set; }
 
         /// <summary>
         /// LTE_ENG_ID
         /// </summary>
-        public int LteEngId { get; set; }
+        public int EngineId { get; set; }
+        
+        public Engine Engine { get; set; }
 
         /// <summary>
         /// LTE_PCON_START
         /// </summary>
-        public int? LtePconStart { get; set; }
+        public int? PconStart { get; set; }
 
         /// <summary>
         /// LTE_PCON_END
         /// </summary>
-        public int? LtePconEnd { get; set; }
+        public int? PconEnd { get; set; }
     }
 }

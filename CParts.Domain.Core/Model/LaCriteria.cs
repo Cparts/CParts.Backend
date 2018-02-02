@@ -5,31 +5,37 @@
         /// <summary>
         /// LAC_LA_ID
         /// </summary>
-        public int LacLaId { get; set; }
+        public int LinkArtId { get; set; }
+        
+        public LinkArt LinkArt { get; set; }
 
         /// <summary>
         /// LAC_SORT
         /// </summary>
-        public int LacSort { get; set; }
+        public int Sort { get; set; }
 
         /// <summary>
         /// LAC_CRI_ID
         /// </summary>
-        public short LacCriId { get; set; }
+        public short CriteriaId { get; set; }
+        
+        public Criteria Criteria { get; set; }
 
         /// <summary>
         /// LAC_VALUE
         /// </summary>
-        public string LacValue { get; set; }
+        public string Value { get; set; }
 
         /// <summary>
         /// LAC_KV_DES_ID
         /// </summary>
-        public int? LacKvDesId { get; set; }
+        public int? KvDesignationId { get; set; }
+        
+        public Designation Designation { get; set; }
 
         /// <summary>
         /// LAC_DISPLAY
         /// </summary>
-        public short? LacDisplay { get; set; }
+        public short? Display { get; set; }
     }
 }

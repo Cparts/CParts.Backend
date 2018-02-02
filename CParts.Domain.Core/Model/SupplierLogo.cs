@@ -2,8 +2,23 @@
 {
     public partial class SupplierLogo
     {
-        public short SloId { get; set; }
-        public short SloSupId { get; set; }
-        public short SloLngId { get; set; }
+        /// <summary>
+        /// SLO_ID
+        /// </summary>
+        public short Id { get; set; }
+
+        /// <summary>
+        /// SLO_SUP_ID
+        /// </summary>
+        public short SupplierId { get; set; }
+
+        public Supplier Supplier { get; set; }
+
+        /// <summary>
+        /// SLO_LNG_ID
+        /// </summary>
+        public short LanguageId { get; set; }
+
+        public Language Language { get; set; }
     }
 }

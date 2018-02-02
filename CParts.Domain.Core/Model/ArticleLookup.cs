@@ -1,13 +1,19 @@
-﻿namespace CParts.Domain.Core.Model
+﻿using System;
+using System.Text;
+using Newtonsoft.Json;
+
+namespace CParts.Domain.Core.Model
 {
-    public partial class ArtLookup
+    public partial class ArticleLookup
     {
         /// Like searchbar
         /// <summary>
         /// ARL_ART_ID
         /// </summary>
-        public int ArlArtId { get; set; }
+        public int ArticleId { get; set; }
 
+        public Article Article { get; set; }
+        
         /// <summary>
         /// ARL_SEARCH_NUMBER
         /// </summary>
@@ -16,31 +22,36 @@
         /// <summary>
         /// ARL_KIND
         /// </summary>
+        [JsonIgnore]
         public byte[] Kind { get; set; }
+
+        public int KindConverted => Convert.ToInt32(Encoding.UTF8.GetString(Kind));
 
         /// <summary>
         /// ARL_BRA_ID
         /// </summary>
         public short BrandId { get; set; }
+        
+        public Brand Brand { get; set; }
 
         /// <summary>
         /// ARL_DISPLAY_NR
         /// </summary>
-        public string ArlDisplayNr { get; set; }
+        public string DisplayNumber { get; set; }
 
         /// <summary>
-        /// 
+        /// ARL_DISPLAY
         /// </summary>
-        public short ArlDisplay { get; set; }
+        public short Display { get; set; }
 
         /// <summary>
-        /// 
+        /// ARL_BLOCK
         /// </summary>
-        public short ArlBlock { get; set; }
+        public short Block { get; set; }
 
         /// <summary>
-        /// 
+        /// ARL_SORT
         /// </summary>
-        public short ArlSort { get; set; }
+        public short Sort { get; set; }
     }
 }

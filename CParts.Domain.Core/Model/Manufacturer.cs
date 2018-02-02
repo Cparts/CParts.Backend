@@ -5,46 +5,46 @@
         /// <summary>
         /// MFA_ID
         /// </summary>
-        public short MfaId { get; set; }
+        public short Id { get; set; }
 
         /// <summary>
         /// MFA_PC_MFC
         /// </summary>
-        public short? MfaPcMfc { get; set; }
+        public short? PcMfc { get; set; }
 
         /// <summary>
         /// MFA_CV_MFC
         /// </summary>
-        public short? MfaCvMfc { get; set; }
+        public short? CvMfc { get; set; }
 
         /// <summary>
         /// MFA_AXL_MFC
         /// </summary>
-        public short? MfaAxlMfc { get; set; }
+        public short? AxlMfc { get; set; }
 
         /// <summary>
         /// MFA_ENG_MFC
         /// </summary>
-        public short? MfaEngMfc { get; set; }
+        public short? EngineMfc { get; set; }
 
         /// <summary>
         /// MFA_ENG_TYP
         /// </summary>
-        public short? MfaEngTyp { get; set; }
+        public short? EngineType { get; set; }
 
         /// <summary>
         /// MFA_MFC_CODE
         /// </summary>
-        public string MfaMfcCode { get; set; }
+        public string Code { get; set; }
 
         /// <summary>
         /// MFA_BRAND
         /// </summary>
-        public string MfaBrand { get; set; }
+        public string Brand { get; set; }
 
         /// <summary>
         /// MFA_MF_NR
         /// </summary>
-        public int? MfaMfNr { get; set; }
+        public int? MfNumber { get; set; }
     }
 }

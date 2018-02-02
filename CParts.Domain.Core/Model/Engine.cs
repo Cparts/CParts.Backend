@@ -5,92 +5,102 @@
         /// <summary>
         /// ENG_ID
         /// </summary>
-        public int EngId { get; set; }
+        public int Id { get; set; }
 
         /// <summary>
         /// ENG_MFA_ID
         /// </summary>
-        public short? EngMfaId { get; set; }
+        public short? ManufacturerId { get; set; }
+
+        public Manufacturer Manufacturer { get; set; }
 
         /// <summary>
         /// ENG_CODE
         /// </summary>
-        public string EngCode { get; set; }
+        public string Code { get; set; }
 
         /// <summary>
         /// ENG_PCON_START
         /// </summary>
-        public int? EngPconStart { get; set; }
+        public int? PconStart { get; set; }
 
         /// <summary>
         /// ENG_PCON_END
         /// </summary>
-        public int? EngPconEnd { get; set; }
+        public int? PconEnd { get; set; }
 
         /// <summary>
         /// ENG_KW_FROM
         /// </summary>
-        public int? EngKwFrom { get; set; }
+        public int? KwFrom { get; set; }
 
         /// <summary>
         /// ENG_KW_UPTO
         /// </summary>
-        public int? EngKwUpto { get; set; }
+        public int? KwUpto { get; set; }
 
         /// <summary>
         /// ENG_HP_FROM
         /// </summary>
-        public int? EngHpFrom { get; set; }
+        public int? HpFrom { get; set; }
 
         /// <summary>
         /// ENG_HP_UPTO
         /// </summary>
-        public int? EngHpUpto { get; set; }
+        public int? HpUpto { get; set; }
 
         /// <summary>
         /// ENG_VALVES
         /// </summary>
-        public short? EngValves { get; set; }
+        public short? Valves { get; set; }
 
         /// <summary>
         /// ENG_CYLINDERS
         /// </summary>
-        public short? EngCylinders { get; set; }
+        public short? Cylinders { get; set; }
 
         /// <summary>
         /// ENG_CCM_FROM
         /// </summary>
-        public int? EngCcmFrom { get; set; }
+        public int? CcmFrom { get; set; }
 
         /// <summary>
         /// ENG_CCM_UPTO
         /// </summary>
-        public int? EngCcmUpto { get; set; }
+        public int? CcmUpto { get; set; }
 
         /// <summary>
         /// ENG_KV_DESIGN_DES_ID
         /// </summary>
-        public int? EngKvDesignDesId { get; set; }
+        public int? KvDesignDesignationId { get; set; }
+        
+        public Designation KvDesignDesignation { get; set; }
 
         /// <summary>
         /// ENG_KV_FUEL_TYPE_DES_ID
         /// </summary>
-        public int? EngKvFuelTypeDesId { get; set; }
+        public int? KvFuelTypeDesignationId { get; set; }
+        
+        public Designation KvFuelTypeDesignation { get; set; }
 
         /// <summary>
         /// ENG_KV_FUEL_SUPPLY_DES_ID
         /// </summary>
-        public int? EngKvFuelSupplyDesId { get; set; }
+        public int? KvFuelSupplyDesignationId { get; set; }
+
+        public Designation KvFuelSupplyDesignation { get; set; }
 
         /// <summary>
         /// ENG_DESCRIPTION
         /// </summary>
-        public string EngDescription { get; set; }
+        public string Description { get; set; }
 
         /// <summary>
         /// ENG_KV_ENGINE_DES_ID
         /// </summary>
-        public int? EngKvEngineDesId { get; set; }
+        public int? KvEngineDesignationId { get; set; }
+
+        public Designation KvEngineDesignation { get; set; }
 
         /// <summary>
         /// ENG_KW_RPM_FROM
@@ -100,116 +110,130 @@
         /// <summary>
         /// ENG_KW_RPM_UPTO
         /// </summary>
-        public int? EngKwRpmUpto { get; set; }
+        public int? KwRPMUpto { get; set; }
 
         /// <summary>
         /// ENG_TORQUE_FROM
         /// </summary>
-        public int? EngTorqueFrom { get; set; }
+        public int? TorqueFrom { get; set; }
 
         /// <summary>
         /// ENG_TORQUE_UPTO
         /// </summary>
-        public int? EngTorqueUpto { get; set; }
+        public int? TorqueUpto { get; set; }
 
         /// <summary>
         /// ENG_TORQUE_RPM_FROM
         /// </summary>
-        public int? EngTorqueRpmFrom { get; set; }
+        public int? TorqueRpmFrom { get; set; }
 
         /// <summary>
         /// ENG_TORQUE_RPM_UPTO
         /// </summary>
-        public int? EngTorqueRpmUpto { get; set; }
+        public int? TorqueRpmUpto { get; set; }
 
         /// <summary>
         /// ENG_COMPRESSION_FROM
         /// </summary>
-        public double? EngCompressionFrom { get; set; }
+        public double? CompressionFrom { get; set; }
 
         /// <summary>
         /// ENG_COMPRESSION_UPTO
         /// </summary>
-        public double? EngCompressionUpto { get; set; }
+        public double? CompressionUpto { get; set; }
 
         /// <summary>
         /// ENG_DRILLING
         /// </summary>
-        public double? EngDrilling { get; set; }
+        public double? Drilling { get; set; }
 
         /// <summary>
         /// ENG_EXTENSION
         /// </summary>
-        public double? EngExtension { get; set; }
+        public double? Extension { get; set; }
 
         /// <summary>
         /// ENG_CRANKSHAFT
         /// </summary>
-        public short? EngCrankshaft { get; set; }
+        public short? Crankshaft { get; set; }
 
         /// <summary>
         /// ENG_KV_CHARGE_DES_ID
         /// </summary>
-        public int? EngKvChargeDesId { get; set; }
+        public int? KvChargeDesignationId { get; set; }
+
+        public Designation KvChargeDesignation { get; set; }
 
         /// <summary>
         /// ENG_KV_GAS_NORM_DES_ID
         /// </summary>
-        public int? EngKvGasNormDesId { get; set; }
+        public int? KvGasNormDesignationId { get; set; }
+
+        public Designation KvGasNormDesignation { get; set; }
 
         /// <summary>
         /// ENG_KV_CYLINDERS_DES_ID
         /// </summary>
-        public int? EngKvCylindersDesId { get; set; }
+        public int? KvCylindersDesignationId { get; set; }
+
+        public Designation KvCylindersDesignation { get; set; }
 
         /// <summary>
         /// ENG_KV_CONTROL_DES_ID
         /// </summary>
-        public int? EngKvControlDesId { get; set; }
+        public int? KvControlDesignationId { get; set; }
+
+        public Designation KvControlDesignation { get; set; }
 
         /// <summary>
         /// ENG_KV_VALVE_CONTROL_DES_ID
         /// </summary>
-        public int? EngKvValveControlDesId { get; set; }
+        public int? KvValveControlDesignationId { get; set; }
+
+        public Designation KvValveControlDesignation { get; set; }
 
         /// <summary>
         /// ENG_KV_COOLING_DES_ID
         /// </summary>
-        public int? EngKvCoolingDesId { get; set; }
+        public int? KvCoolingDesignationId { get; set; }
+
+        public Designation KvCoolingDesignation { get; set; }
 
         /// <summary>
         /// ENG_CCM_TAX_FROM
         /// </summary>
-        public int? EngCcmTaxFrom { get; set; }
+        public int? CcmTaxFrom { get; set; }
 
         /// <summary>
         /// ENG_CCM_TAX_UPTO
         /// </summary>
-        public int? EngCcmTaxUpto { get; set; }
+        public int? CcmTaxUpto { get; set; }
 
         /// <summary>
         /// ENG_LITRES_TAX_FROM
         /// </summary>
-        public double? EngLitresTaxFrom { get; set; }
+        public double? LitresTaxFrom { get; set; }
 
         /// <summary>
         /// ENG_LITRES_TAX_UPTO
         /// </summary>
-        public double? EngLitresTaxUpto { get; set; }
+        public double? LitresTaxUpto { get; set; }
 
         /// <summary>
         /// ENG_LITRES_FROM
         /// </summary>
-        public double? EngLitresFrom { get; set; }
+        public double? LitresFrom { get; set; }
 
         /// <summary>
         /// ENG_LITRES_UPTO
         /// </summary>
-        public double? EngLitresUpto { get; set; }
+        public double? LitresUpto { get; set; }
 
         /// <summary>
         /// ENG_KV_USE_DES_ID
         /// </summary>
-        public int? EngKvUseDesId { get; set; }
+        public int? KvUseDesignationId { get; set; }
+
+        public Designation KvUseDesignation { get; set; }
     }
 }

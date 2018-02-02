@@ -1,45 +1,61 @@
-﻿namespace CParts.Domain.Core.Model
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using Newtonsoft.Json;
+
+namespace CParts.Domain.Core.Model
 {
     public partial class Criteria
     {
         /// <summary>
         /// CRI_ID
         /// </summary>
-        public short CriId { get; set; }
+        public short Id { get; set; }
 
         /// <summary>
         /// CRI_DES_ID
         /// </summary>
-        public int CriDesId { get; set; }
+        public int DesignationId { get; set; }
+        
+        public Designation Designation { get; set; }
 
         /// <summary>
         /// CRI_SHORT_DES_ID
         /// </summary>
-        public int? CriShortDesId { get; set; }
+        public int? ShortDesignationId { get; set; }
+        
+        public Designation ShortDesignation { get; set; }
 
         /// <summary>
         /// CRI_UNIT_DES_ID
         /// </summary>
-        public int? CriUnitDesId { get; set; }
+        public int? UnitDesignationId { get; set; }
+        
+        public Designation UnitDesignation { get; set; }
 
         /// <summary>
         /// CRI_TYPE
         /// </summary>
-        public byte[] CriType { get; set; }
+        [JsonIgnore]
+        public byte[] Type { get; set; }
+        
+        public string TypeConverted => Encoding.UTF8.GetString(Type);
 
+        //TODO: Investigate CRI_KT_ID
         /// <summary>
         /// CRI_KT_ID
         /// </summary>
-        public short? CriKtId { get; set; }
+        public short? KtId { get; set; }
 
         /// <summary>
         /// CRI_IS_INTERVAL
         /// </summary>
-        public short? CriIsInterval { get; set; }
+        public short? IsInterval { get; set; }
 
+        //TODO: Investigate CRI_KT_ID
         /// <summary>
         /// CRI_SUCCESSOR
         /// </summary>
-        public short? CriSuccessor { get; set; }
+        public short? Successor { get; set; }
     }
 }

@@ -5,16 +5,18 @@
         /// <summary>
         /// LGA_ART_ID
         /// </summary>
-        public int LgaArtId { get; set; }
+        public int ArticleId { get; set; }
 
         /// <summary>
         /// LGA_SORT
         /// </summary>
-        public short LgaSort { get; set; }
+        public short Sort { get; set; }
 
         /// <summary>
         /// LGA_GRA_ID
         /// </summary>
-        public string LgaGraId { get; set; }
+        public string GraphicId { get; set; }
+        
+        public Graphic Graphic { get; set; }
     }
 }

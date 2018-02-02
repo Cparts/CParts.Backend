@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Linq;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 using CParts.Domain.Abstractions.Contexts;
 using CParts.Domain.Core;
 
-namespace CParts.Infrastructure.Data
+namespace CParts.Infrastructure.Data.Repositories.Base
 {
     public abstract class TrackedCrudRepositoryBase<TEntity, TKey> : CrudRepositoryBase<TEntity, TKey>
         where TKey : IEquatable<TKey> 

@@ -5,12 +5,14 @@
         /// <summary>
         /// GRA_SUP_ID
         /// </summary>
-        public short? GraSupId { get; set; }
+        public short? SupplierId { get; set; }
+
+        public Supplier Supplier { get; set; }
 
         /// <summary>
         /// GRA_ID
         /// </summary>
-        public string GraId { get; set; }
+        public string Id { get; set; }
 
         /// <summary>
         /// GRA_DOC_TYPE
@@ -20,8 +22,11 @@
         /// <summary>
         /// GRA_LNG_ID
         /// </summary>
-        public short GraLngId { get; set; }
+        public short LanguageId { get; set; }
 
+        public Language Language { get; set; }
+
+        //TODO: Investigate GRA_GRD_ID
         /// <summary>
         /// GRA_GRD_ID
         /// </summary>
@@ -30,26 +35,28 @@
         /// <summary>
         /// GRA_TYPE
         /// </summary>
-        public short? GraType { get; set; }
+        public short? Type { get; set; }
 
         /// <summary>
         /// GRA_NORM
         /// </summary>
-        public string GraNorm { get; set; }
+        public string Norm { get; set; }
 
         /// <summary>
         /// GRA_SUPPLIER_NR
         /// </summary>
-        public short? GraSupplierNr { get; set; }
+        public short? SupplierNumber { get; set; }
 
         /// <summary>
         /// GRA_TAB_NR
         /// </summary>
-        public short? GraTabNr { get; set; }
+        public short? TabNr { get; set; }
 
         /// <summary>
         /// GRA_DES_ID
         /// </summary>
-        public int? GraDesId { get; set; }
+        public int? DesignationId { get; set; }
+
+        public Designation Designation { get; set; }
     }
 }

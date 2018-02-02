@@ -1,15 +1,15 @@
 ﻿namespace CParts.Domain.Core.Model
 {
-    public partial class DesTextOriginal
+    public partial class DesignationTextOriginal
     {
         /// <summary>
         /// TEXT_ID
         /// </summary>
-        public int TexId { get; set; }
+        public int Id { get; set; }
 
         /// <summary>
         /// TEX_TEXT
         /// </summary>
-        public string TexText { get; set; }
+        public string Text { get; set; }
     }
 }

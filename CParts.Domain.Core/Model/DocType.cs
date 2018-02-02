@@ -10,6 +10,6 @@
         /// <summary>
         /// DOC_EXTENSION
         /// </summary>
-        public string DocExtension { get; set; }
+        public string Extension { get; set; }
     }
 }

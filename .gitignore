@@ -18,3 +18,21 @@ CParts\.Services\.Abstractions/obj/
 CParts\.Web/obj/
 
 CParts\.BootStrapper/obj/
+
+CParts\.BootStrapper/bin/
+
+CParts\.Domain\.Abstractions/bin/
+
+CParts\.Domain\.Core/bin/
+
+CParts\.Framework/bin/
+
+CParts\.Framework/obj/
+
+CParts\.Infrastructure\.Business/bin/
+
+CParts\.Infrastructure\.Data/bin/
+
+CParts\.Services\.Abstractions/bin/
+
+CParts\.Web/bin/

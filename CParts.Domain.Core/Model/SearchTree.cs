@@ -1,40 +1,48 @@
-﻿namespace CParts.Domain.Core.Model
+﻿using System.Collections.Generic;
+
+namespace CParts.Domain.Core.Model
 {
     public partial class SearchTree
     {
         /// <summary>
         /// STR_ID
         /// </summary>
-        public int StrId { get; set; }
+        public int Id { get; set; }
 
         /// <summary>
         /// STR_ID_PARENT
         /// </summary>
-        public int? StrIdParent { get; set; }
+        public int? ParentId { get; set; }
+        
+        public SearchTree Parent { get; set; }
 
+        public ICollection<SearchTree> Childs { get; set; }
+        
         /// <summary>
         /// STR_TYPE
         /// </summary>
-        public short? StrType { get; set; }
+        public short? Type { get; set; }
 
         /// <summary>
         /// STR_LEVEL
         /// </summary>
-        public short? StrLevel { get; set; }
+        public short? Level { get; set; }
 
         /// <summary>
         /// STR_DES_ID
         /// </summary>
-        public int? StrDesId { get; set; }
+        public int? DesignationId { get; set; }
+        
+        public Designation Designation { get; set; }
 
         /// <summary>
         /// STR_SORT
         /// </summary>
-        public short? StrSort { get; set; }
+        public short? Sort { get; set; }
 
         /// <summary>
         /// STR_NODE_NR
         /// </summary>
-        public int? StrNodeNr { get; set; }
+        public int? NodeNr { get; set; }
     }
 }
