@@ -2,19 +2,20 @@
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using CParts.Domain.Abstractions.Contexts;
-using CParts.Domain.Abstractions.Repositories;
+using CParts.Domain.Abstractions.Contexts.Base;
+using CParts.Domain.Abstractions.Repositories.Base;
 using Microsoft.EntityFrameworkCore;
 
 namespace CParts.Infrastructure.Data.Repositories.Base
 {
-    public abstract class CrudRepositoryBase<TEntity, TKey> : ReadRepositoryBase<TEntity>, ICrudRepository<TEntity, TKey>
+    public abstract class CrudRepositoryBase<TEntity, TKey, TContext> : ReadRepositoryBase<TEntity, TContext>, ICrudRepository<TEntity, TKey>
         where TEntity : class
         where TKey : IEquatable<TKey>
+        where TContext : IDbContext
     {
         protected abstract Expression<Func<TEntity, bool>> KeyPredicate(TKey key);
 
-        protected CrudRepositoryBase(IDbContext context) : base(context)
+        protected CrudRepositoryBase(TContext context) : base(context)
         {
         }
 

@@ -1,0 +1,9 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CParts.Business.Abstractions\CParts.Business.Abstractions.csproj" />
+    <ProjectReference Include="..\CParts.Services.Abstractions\CParts.Services.Abstractions.csproj" />
+  </ItemGroup>
+</Project>

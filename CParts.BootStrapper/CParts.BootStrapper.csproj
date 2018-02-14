@@ -3,10 +3,12 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CParts.Business.Abstractions\CParts.Business.Abstractions.csproj" />
     <ProjectReference Include="..\CParts.Domain.Abstractions\CParts.Domain.Abstractions.csproj" />
     <ProjectReference Include="..\CParts.Framework\CParts.Framework.csproj" />
     <ProjectReference Include="..\CParts.Infrastructure.Business\CParts.Infrastructure.Business.csproj" />
     <ProjectReference Include="..\CParts.Infrastructure.Data\CParts.Infrastructure.Data.csproj" />
+    <ProjectReference Include="..\CParts.Infrastructure.Services\CParts.Infrastructure.Services.csproj" />
     <ProjectReference Include="..\CParts.Services.Abstractions\CParts.Services.Abstractions.csproj" />
   </ItemGroup>
   <ItemGroup>

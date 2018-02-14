@@ -1,5 +1,5 @@
 ﻿using CParts.Domain.Abstractions.Contexts;
-using CParts.Domain.Core;
+using CParts.Domain.Core.Model.Internal;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;

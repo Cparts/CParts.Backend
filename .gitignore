@@ -36,3 +36,11 @@ CParts\.Infrastructure\.Data/bin/
 CParts\.Services\.Abstractions/bin/
 
 CParts\.Web/bin/
+
+CParts\.Business\.Abstractions/bin/
+
+CParts\.Business\.Abstractions/obj/
+
+CParts\.Infrastructure\.Services/bin/
+
+CParts\.Infrastructure\.Services/obj/

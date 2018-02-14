@@ -2,11 +2,9 @@
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
-using CParts.Domain.Core;
-using CParts.Services.Abstractions;
+using CParts.Domain.Core.Model.Internal;
 using CParts.Web.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -18,14 +16,10 @@ namespace CParts.Web.Controllers
     public class AuthorizationController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly IArtLookupService _artLookupService;
-        private readonly IBrandsService _brandsService;
 
-        public AuthorizationController(UserManager<ApplicationUser> userManager, IArtLookupService artLookupService, IBrandsService brandsService)
+        public AuthorizationController(UserManager<ApplicationUser> userManager)
         {
             _userManager = userManager;
-            _artLookupService = artLookupService;
-            _brandsService = brandsService;
         }
 
 

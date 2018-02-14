@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
+using CParts.Business.Abstractions;
 using CParts.Services.Abstractions;
-using CParts.Web.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CParts.Web.Controllers
@@ -8,69 +8,76 @@ namespace CParts.Web.Controllers
     [Route("api/v1/parts")]
     public class PartsController : Controller
     {
-        private readonly IArtLookupService _artLookupService;
-        private readonly IBrandsService _brandsService;
-        private readonly IManufacturersService _manufacturersService;
-        private readonly IModelsService _modelsService;
-        private readonly ITypesService _typesService;
+        private readonly ISearchTreeService _searchTreeService;
+        private readonly IArticlesServiceWrapper _articlesServiceWrapper;
+        private readonly IApplicabilityServiceWrapper _applicabilityServiceWrapper;
+        private readonly ICarSelectionServiceWrapper _carSelectionServiceWrapper;
 
-        public PartsController(IBrandsService brandsService, IArtLookupService artLookupService, IManufacturersService manufacturersService, IModelsService modelsService, ITypesService typesService)
+        public PartsController(ISearchTreeService searchTreeService,
+            IArticlesServiceWrapper articlesServiceWrapper, IApplicabilityServiceWrapper applicabilityServiceWrapper, ICarSelectionServiceWrapper carSelectionServiceWrapper)
         {
-            _brandsService = brandsService;
-            _artLookupService = artLookupService;
-            _manufacturersService = manufacturersService;
-            _modelsService = modelsService;
-            _typesService = typesService;
-        }
-
-        [HttpGet]
-        [Route("artLookup/{sdata}")]
-        public async Task<IActionResult> GetSomeData(string sdata)
-        {
-            return Ok(await _artLookupService.GetSomeData(sdata));
-        }
-
-        [HttpGet]
-        [Route("brands")]
-        public async Task<IActionResult> GetAllBrands()
-        {
-            return Ok(await _brandsService.AllAsync());
+            _searchTreeService = searchTreeService;
+            _articlesServiceWrapper = articlesServiceWrapper;
+            _applicabilityServiceWrapper = applicabilityServiceWrapper;
+            _carSelectionServiceWrapper = carSelectionServiceWrapper;
         }
 
         [HttpGet]
         [Route("manufacturers")]
-        public async Task<IActionResult> GetAllManufacturers()
+        public async Task<IActionResult> GetManufacturers()
         {
-            return Ok(await _manufacturersService.GetAll());
+            return Ok(await _carSelectionServiceWrapper.GetAllManufacturerAsync());
         }
 
         [HttpGet]
-        [Route("manufacturers/{id}/models")]
-        public async Task<IActionResult> GetManufacturerModels(int id)
+        [Route("manufacturers/{manufacturerId}/models")]
+        public async Task<IActionResult> GetModels(int manufacturerId, int lang = 4)
         {
-            return Ok(await _modelsService.GetByManufacturer(id));
+            return Ok(await _carSelectionServiceWrapper.GetModelsByManufacturerAsync(manufacturerId, lang));
         }
 
         [HttpGet]
-        [Route("models/{modId}/types")]
-        public async Task<IActionResult> GetModelModifications(int modId, int? lang = 1)
+        [Route("models/{modelId}/types")]
+        public async Task<IActionResult> GetTypes(int modelId, int lang = 4)
         {
-            return Ok(await _typesService.GetByModelId(modId,lang));
+            return Ok(await _carSelectionServiceWrapper.GetTypesByModelAsync(modelId, lang));
         }
 
         [HttpGet]
-        [Route("models/llts/{typeId}")]
-        public async Task<IActionResult> GetLLTs(int typeId)
+        [Route("types/{typeId}/searchtree/{searchTree?}")]
+        public async Task<IActionResult> GetNodes(int typeId, int? searchTree = null)
         {
-            return Ok(await _typesService.BuildSearchTree(typeId));
+            return Ok(await _searchTreeService.GetAppliableNodesAsync(typeId, searchTree));
         }
 
         [HttpGet]
-        [Route("manufacturers/{manufacturerId}/year/{year}")]
-        public async Task<IActionResult> GetMfModelsByYear(int manufacturerId, int year)
+        [Route("types/{typeId}/searchtree/{searchTree}/articles")]
+        public async Task<IActionResult> GetArticles(int typeId, int searchTree, int lang = 4)
         {
-            return Ok(await _modelsService.GetByManufacturerAndYear(manufacturerId, year));
+            return Ok(await _articlesServiceWrapper.GetByTypeAndTreeNodeAsync(typeId, searchTree, lang));
         }
+
+        [HttpGet]
+        [Route("articles/{articleId}/applicable/manufacturers")]
+        public async Task<IActionResult> GetApplicabilityManufacturers(int articleId, int lang = 4)
+        {
+            return Ok(await _applicabilityServiceWrapper.GetManufacturersWithApplicableModels(articleId,lang));
+        }
+        
+        [HttpGet]
+        [Route("articles/{articleId}/applicable/manufacturers/{manufacturerId}/models")]
+        public async Task<IActionResult> GetApplicabilityModels(int articleId, int manufacturerId, int lang = 4)
+        {
+            return Ok(await _applicabilityServiceWrapper.GetModelsWithApplicableTypes(articleId, manufacturerId, lang));
+        }
+        
+        [HttpGet]
+        [Route("articles/{articleId}/applicable/manufacturers/{manufacturerId}/models/{modelId}/types")]
+        public async Task<IActionResult> GetApplicabilityTypes(int articleId, int manufacturerId, int modelId, int lang = 4)
+        {
+            return Ok(await _applicabilityServiceWrapper.GetApplicableTypesByModel(articleId, modelId, lang));
+        }
+        
 
     }
 }

@@ -1,15 +1,17 @@
 ﻿using System;
 using System.Threading.Tasks;
 using CParts.Domain.Abstractions.Contexts;
-using CParts.Domain.Core;
+using CParts.Domain.Abstractions.Contexts.Base;
+using CParts.Domain.Core.Model.Internal.Contracts;
 
 namespace CParts.Infrastructure.Data.Repositories.Base
 {
-    public abstract class TrackedCrudRepositoryBase<TEntity, TKey> : CrudRepositoryBase<TEntity, TKey>
+    public abstract class TrackedCrudRepositoryBase<TEntity, TKey, TContext> : CrudRepositoryBase<TEntity, TKey, TContext>
         where TKey : IEquatable<TKey> 
         where TEntity : class, ITrackedEntity
+        where TContext : IDbContext
     {
-        protected TrackedCrudRepositoryBase(IPartsDataDbContext context) : base(context)
+        protected TrackedCrudRepositoryBase(TContext context) : base(context)
         {
         }
 

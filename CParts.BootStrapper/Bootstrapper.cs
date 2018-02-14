@@ -1,11 +1,12 @@
 ﻿using CParts.Domain.Abstractions.Contexts;
-using CParts.Domain.Abstractions.Repositories;
-using CParts.Domain.Core;
+using CParts.Domain.Abstractions.Repositories.Parts;
+using CParts.Domain.Core.Model.Internal;
 using CParts.Framework.Options;
 using CParts.Infrastructure.Business;
 using CParts.Infrastructure.Data.Contexts;
-using CParts.Infrastructure.Data.Repositories;
-using CParts.Infrastructure.Data.Repositories.Base;
+using CParts.Infrastructure.Data.Repositories.Parts;
+using CParts.Business.Abstractions;
+using CParts.Infrastructure.Services;
 using CParts.Services.Abstractions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
@@ -56,12 +57,33 @@ namespace CParts.BootStrapper
             services.AddScoped<IInternalDataDbContext>(provider =>
                 provider.GetRequiredService<InternalDataDbContext>());
 
-            services.AddTransient(typeof(IReadRepository<>), typeof(PartsReadRepository<>));
-            services.AddTransient<IArtLookupService, ArtLookupService>();
-            services.AddTransient<IBrandsService, BrandsService>();
-            services.AddTransient<IManufacturersService, ManufacturersService>();
-            services.AddTransient<IModelsService, ModelsService>();
-            services.AddTransient<ITypesService, TypesService>();
+            //Designations repositories
+            services.AddTransient<ICountryDesignationsRepository, CountryDesignationsRepository>();
+            services.AddTransient<IGeneralDesignationsRepository, GeneralDesignationsRepository>();
+            
+            //Separate entities repositories
+            services.AddTransient<IArticlesRepository, ArticlesRepository>();
+            services.AddTransient<IManufacturersRepository, ManufacturersRepository>();
+            services.AddTransient<IModelsRepository, ModelsRepository>();
+            services.AddTransient<ISearchTreeRepository, SearchTreeRepository>();
+            services.AddTransient<ITypesRepository, TypesRepository>();
+            
+            //Links repositories
+            services.AddTransient<IArticleLinkToTypeLinkRepository, ArticleLinkToTypeLinkRepository>();
+            services.AddTransient<IGroupToArticleLinkRepository, GroupToArticleLinkRepository>();
+            services.AddTransient<IGroupToTreeLinkRepository, GroupToTreeLinkRepository>();
+            services.AddTransient<IArticleLookupRepository, ArticleLookupRepository>();
+            services.AddTransient<IArticleCriteriasRepository, ArticleCriteriasRepository>();
+            
+            //
+            services.AddTransient<IArticlesService, ArticlesService>();
+            services.AddTransient<ISearchTreeService, SearchTreeService>();
+            services.AddTransient<IPartApplicabilityService, PartApplicabilityService>();
+            services.AddTransient<ICarSelectionService, CarSelectionService>();
+
+            services.AddTransient<IArticlesServiceWrapper, ArticlesServiceWrapper>();
+            services.AddTransient<IApplicabilityServiceWrapper, ApplicabilityServiceWrapper>();
+            services.AddTransient<ICarSelectionServiceWrapper, CarSelectionServiceWrapper>();
             
             return services;
         }

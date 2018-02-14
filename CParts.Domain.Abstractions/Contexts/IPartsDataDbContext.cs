@@ -1,4 +1,6 @@
-﻿using CParts.Domain.Core.Model;
+﻿using CParts.Domain.Abstractions.Contexts.Base;
+using CParts.Domain.Core.Model.Parts;
+using CParts.Domain.Core.Model.Parts.Links;
 using Microsoft.EntityFrameworkCore;
 
 namespace CParts.Domain.Abstractions.Contexts
@@ -10,9 +12,9 @@ namespace CParts.Domain.Abstractions.Contexts
         DbSet<ArticleLookup> ArtLookup { get; set; }
         DbSet<Brand> Brands { get; set; }
         DbSet<Country> Countries { get; set; }
-//        DbSet<CountryDesignation> CountryDesignations { get; set; }
+        DbSet<CountryDesignation> CountryDesignations { get; set; }
         DbSet<Criteria> Criterias { get; set; }
-        DbSet<Designation> Designations { get; set; }
+        DbSet<GeneralDesignation> GeneralDesignations { get; set; }
         DbSet<DesignationText> DesTexts { get; set; }
         DbSet<DesignationTextOriginal> DesTextsOriginal { get; set; }
         DbSet<DocType> DocTypes { get; set; }
@@ -21,10 +23,10 @@ namespace CParts.Domain.Abstractions.Contexts
         DbSet<LaCriteria> LaCriterias { get; set; }
         DbSet<Language> Languages { get; set; }
         DbSet<LinkArt> LinkArts { get; set; }
-        DbSet<LinkGaStr> LinkGaStrs { get; set; }
+        DbSet<GroupToTreeLink> LinkGaStrs { get; set; }
         DbSet<LinkGraArt> LinkGraArts { get; set; }
-        DbSet<LinkLaTyp> LinkLaTyps { get; set; }
-        DbSet<LinkTypEng> LinkTypEngs { get; set; }
+        DbSet<ArticleLinkToTypeLink> LinkLaTyps { get; set; }
+        DbSet<TypeToEngineLink> LinkTypEngs { get; set; }
         DbSet<Manufacturer> Manufacturers { get; set; }
         DbSet<Model> Models { get; set; }
         DbSet<SearchTree> SearchTrees { get; set; }

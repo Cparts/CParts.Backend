@@ -3,11 +3,14 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CParts.Business.Abstractions\CParts.Business.Abstractions.csproj">
+      <Project>{37EB9562-2D75-410F-8F35-1853BCF60FB4}</Project>
+      <Name>CParts.Business.Abstractions</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CParts.Domain.Abstractions\CParts.Domain.Abstractions.csproj" />
     <ProjectReference Include="..\CParts.Domain.Core\CParts.Domain.Core.csproj" />
     <ProjectReference Include="..\CParts.Domain.Core\CParts.Domain.Core.csproj" />
     <ProjectReference Include="..\CParts.Framework\CParts.Framework.csproj" />
-    <ProjectReference Include="..\CParts.Services.Abstractions\CParts.Services.Abstractions.csproj" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="LinqKit.Microsoft.EntityFrameworkCore" Version="1.1.13" />

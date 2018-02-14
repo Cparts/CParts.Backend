@@ -1,5 +1,6 @@
 ﻿using CParts.Domain.Abstractions.Contexts;
-using CParts.Domain.Core.Model;
+using CParts.Domain.Core.Model.Parts;
+using CParts.Domain.Core.Model.Parts.Links;
 using Microsoft.EntityFrameworkCore;
 
 namespace CParts.Infrastructure.Data.Contexts
@@ -12,9 +13,9 @@ namespace CParts.Infrastructure.Data.Contexts
         public virtual DbSet<ArticleLookup> ArtLookup { get; set; }
         public virtual DbSet<Brand> Brands { get; set; }
         public virtual DbSet<Country> Countries { get; set; }
-//        public virtual DbSet<CountryDesignation> CountryDesignations { get; set; }
+        public virtual DbSet<CountryDesignation> CountryDesignations { get; set; }
         public virtual DbSet<Criteria> Criterias { get; set; }
-        public virtual DbSet<Designation> Designations { get; set; }
+        public virtual DbSet<GeneralDesignation> GeneralDesignations { get; set; }
         public virtual DbSet<DesignationText> DesTexts { get; set; }
         public virtual DbSet<DesignationTextOriginal> DesTextsOriginal { get; set; }
         public virtual DbSet<DocType> DocTypes { get; set; }
@@ -23,10 +24,10 @@ namespace CParts.Infrastructure.Data.Contexts
         public virtual DbSet<LaCriteria> LaCriterias { get; set; }
         public virtual DbSet<Language> Languages { get; set; }
         public virtual DbSet<LinkArt> LinkArts { get; set; }
-        public virtual DbSet<LinkGaStr> LinkGaStrs { get; set; }
+        public virtual DbSet<GroupToTreeLink> LinkGaStrs { get; set; }
         public virtual DbSet<LinkGraArt> LinkGraArts { get; set; }
-        public virtual DbSet<LinkLaTyp> LinkLaTyps { get; set; }
-        public virtual DbSet<LinkTypEng> LinkTypEngs { get; set; }
+        public virtual DbSet<ArticleLinkToTypeLink> LinkLaTyps { get; set; }
+        public virtual DbSet<TypeToEngineLink> LinkTypEngs { get; set; }
         public virtual DbSet<Manufacturer> Manufacturers { get; set; }
         public virtual DbSet<Model> Models { get; set; }
         public virtual DbSet<SearchTree> SearchTrees { get; set; }
@@ -58,7 +59,7 @@ namespace CParts.Infrastructure.Data.Contexts
             {
                 entity.ToTable("COUNTRY_DESIGNATIONS");
 
-                entity.HasKey(e => new {e.Id, e.LanguageId, e.DesignationTextId});
+                entity.HasKey(e => new {e.Id, e.LanguageId, DesignationTextId = e.TextId});
                 entity.Property(e => e.Id)
                     .HasColumnName("CDS_ID")
                     .HasColumnType("int(11)");
@@ -67,11 +68,11 @@ namespace CParts.Infrastructure.Data.Contexts
                     .HasColumnName("CDS_LNG_ID")
                     .HasColumnType("smallint(6)");
 
-                entity.Property(e => e.DesignationTextId)
+                entity.Property(e => e.TextId)
                     .HasColumnName("CDS_TEX_ID")
                     .HasColumnType("int(11)");
 
-                entity.HasOne(e => e.DesignationText).WithMany().HasForeignKey(e => e.DesignationTextId);
+                entity.HasOne(e => e.Text).WithMany().HasForeignKey(e => e.TextId);
                 entity.HasOne(e => e.Language).WithMany().HasForeignKey(e => e.LanguageId);
             });
 
@@ -167,7 +168,7 @@ namespace CParts.Infrastructure.Data.Contexts
 
                 entity.HasIndex(e => e.CompleteDesignationId)
                     .HasName("ART_COMPLETE_DES_ID");
-
+                
                 entity.HasIndex(e => e.DesignationId)
                     .HasName("ART_DES_ID");
 
@@ -357,7 +358,6 @@ namespace CParts.Infrastructure.Data.Contexts
                 entity.Property(e => e.DesignationId)
                     .HasColumnName("CRI_DES_ID")
                     .HasColumnType("int(11)");
-                entity.HasOne(e => e.Designation).WithMany().HasForeignKey(e => e.DesignationId);
 
                 entity.Property(e => e.IsInterval)
                     .HasColumnName("CRI_IS_INTERVAL")
@@ -370,7 +370,6 @@ namespace CParts.Infrastructure.Data.Contexts
                 entity.Property(e => e.ShortDesignationId)
                     .HasColumnName("CRI_SHORT_DES_ID")
                     .HasColumnType("int(11)");
-                entity.HasOne(e => e.ShortDesignation).WithMany().HasForeignKey(e => e.ShortDesignationId);
 
                 entity.Property(e => e.Successor)
                     .HasColumnName("CRI_SUCCESSOR")
@@ -383,10 +382,9 @@ namespace CParts.Infrastructure.Data.Contexts
                 entity.Property(e => e.UnitDesignationId)
                     .HasColumnName("CRI_UNIT_DES_ID")
                     .HasColumnType("int(11)");
-                entity.HasOne(e => e.UnitDesignation).WithMany().HasForeignKey(e => e.ShortDesignationId);
             });
 
-            modelBuilder.Entity<Designation>(entity =>
+            modelBuilder.Entity<GeneralDesignation>(entity =>
             {
                 entity.HasKey(e => e.Id);
 
@@ -407,7 +405,7 @@ namespace CParts.Infrastructure.Data.Contexts
                 entity.Property(e => e.TextId)
                     .HasColumnName("DES_TEX_ID")
                     .HasColumnType("int(11)");
-                entity.HasOne(e => e.Text).WithOne().HasForeignKey<Designation>(e => e.TextId);
+                entity.HasOne(e => e.Text).WithOne().HasForeignKey<GeneralDesignation>(e => e.TextId);
             });
 
             modelBuilder.Entity<DesignationText>(entity =>
@@ -770,7 +768,7 @@ namespace CParts.Infrastructure.Data.Contexts
                     .HasColumnType("int(11)");
             });
 
-            modelBuilder.Entity<LinkGaStr>(entity =>
+            modelBuilder.Entity<GroupToTreeLink>(entity =>
             {
                 entity.HasKey(e => new {LgsStrId = e.SearchTreeId, LgsGaId = e.GaId});
 
@@ -779,7 +777,7 @@ namespace CParts.Infrastructure.Data.Contexts
                 entity.Property(e => e.SearchTreeId)
                     .HasColumnName("LGS_STR_ID")
                     .HasColumnType("int(11)");
-                entity.HasOne(e => e.SearchTree).WithOne().HasForeignKey<LinkGaStr>(e => e.SearchTreeId);
+                entity.HasOne(e => e.SearchTree).WithOne().HasForeignKey<GroupToTreeLink>(e => e.SearchTreeId);
 
                 entity.Property(e => e.GaId)
                     .HasColumnName("LGS_GA_ID")
@@ -806,7 +804,7 @@ namespace CParts.Infrastructure.Data.Contexts
                     .HasMaxLength(11);
             });
 
-            modelBuilder.Entity<LinkLaTyp>(entity =>
+            modelBuilder.Entity<ArticleLinkToTypeLink>(entity =>
             {
                 entity.HasKey(e => new {LatTypId = e.TypeId, e.LatGaId, LatLaId = e.LinkArtId, LatSort = e.Sort});
 
@@ -837,7 +835,7 @@ namespace CParts.Infrastructure.Data.Contexts
                 entity.HasOne(e => e.Supplier).WithMany().HasForeignKey(e => e.SupplierId);
             });
 
-            modelBuilder.Entity<LinkTypEng>(entity =>
+            modelBuilder.Entity<TypeToEngineLink>(entity =>
             {
                 entity.HasKey(e => new {LteTypId = e.TypeId, LteNr = e.Number, LteEngId = e.EngineId});
 
@@ -982,7 +980,7 @@ namespace CParts.Infrastructure.Data.Contexts
                 entity.Property(e => e.ParentId)
                     .HasColumnName("STR_ID_PARENT")
                     .HasColumnType("int(11)");
-                entity.HasOne(e => e.Parent).WithOne().HasForeignKey<SearchTree>(e => e.ParentId);
+//                entity.HasOne(e => e.Parent).WithOne().HasForeignKey<SearchTree>(e => e.ParentId);
 
                 entity.Property(e => e.Level)
                     .HasColumnName("STR_LEVEL")
@@ -1000,7 +998,7 @@ namespace CParts.Infrastructure.Data.Contexts
                     .HasColumnName("STR_TYPE")
                     .HasColumnType("smallint(6)");
 
-                entity.HasMany(x => x.Childs).WithOne().HasForeignKey(x => x.Id);
+                entity.HasMany(x => x.Childs).WithOne(x => x.Parent).HasForeignKey(x => x.ParentId);
             });
 
             modelBuilder.Entity<SupplierAddress>(entity =>
