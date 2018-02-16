@@ -8,10 +8,10 @@ namespace CParts.Framework
     public static class LinqExtensions
     {
         public static IQueryable<TEntity> DistinctBy<TEntity, TKey>(this IQueryable<TEntity> set,
-            Expression<Func<TEntity, TKey>> distinctProperty) 
+            Expression<Func<TEntity, TKey>> distinctProperty)
             where TKey : IEquatable<TKey>
         {
-        //TODO: Fix. Can lead to deep performance problems
+            //TODO: Fix. Can lead to deep performance problems
             return set.GroupBy(distinctProperty).Select(x => x.First());
 //            return set.Distinct(
 //                new DynamicLambdaComparer<TEntity>((e1, e2) => distinctProperty(e1).Equals(distinctProperty(e2))));
@@ -42,5 +42,29 @@ namespace CParts.Framework
                 return _hasher(obj);
             }
         }
+
+        public static IQueryable<TEntity> Paginate<TEntity>(this IQueryable<TEntity> dbSet,
+            Expression<Func<TEntity, IComparable>> keySelector, 
+            OrderDirection direction = OrderDirection.Ascending,
+            int page = 1,
+            int pageSize = int.MaxValue)
+        {
+            if (direction == OrderDirection.Ascending)
+            {
+                dbSet.OrderBy(keySelector);
+            }
+            else
+            {
+                dbSet.OrderByDescending(keySelector);
+            }
+            
+            return dbSet.Skip((page - 1) * pageSize).Take(pageSize);
+        }
+    }
+
+    public enum OrderDirection
+    {
+        Ascending,
+        Descending
     }
 }

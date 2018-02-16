@@ -12,14 +12,20 @@ namespace CParts.Web.Controllers
         private readonly IArticlesServiceWrapper _articlesServiceWrapper;
         private readonly IApplicabilityServiceWrapper _applicabilityServiceWrapper;
         private readonly ICarSelectionServiceWrapper _carSelectionServiceWrapper;
+        private readonly IArticleAnaloguesService _articleAnaloguesService;
+        private readonly IAnaloguesServiceWrapper _analoguesServiceWrapper;
 
         public PartsController(ISearchTreeService searchTreeService,
-            IArticlesServiceWrapper articlesServiceWrapper, IApplicabilityServiceWrapper applicabilityServiceWrapper, ICarSelectionServiceWrapper carSelectionServiceWrapper)
+            IArticlesServiceWrapper articlesServiceWrapper, IApplicabilityServiceWrapper applicabilityServiceWrapper,
+            ICarSelectionServiceWrapper carSelectionServiceWrapper, IArticleAnaloguesService articleAnaloguesService,
+            IAnaloguesServiceWrapper analoguesServiceWrapper)
         {
             _searchTreeService = searchTreeService;
             _articlesServiceWrapper = articlesServiceWrapper;
             _applicabilityServiceWrapper = applicabilityServiceWrapper;
             _carSelectionServiceWrapper = carSelectionServiceWrapper;
+            _articleAnaloguesService = articleAnaloguesService;
+            _analoguesServiceWrapper = analoguesServiceWrapper;
         }
 
         [HttpGet]
@@ -31,9 +37,9 @@ namespace CParts.Web.Controllers
 
         [HttpGet]
         [Route("manufacturers/{manufacturerId}/models")]
-        public async Task<IActionResult> GetModels(int manufacturerId, int lang = 4)
+        public async Task<IActionResult> GetModels(int manufacturerId, int page = 1, int lang = 4)
         {
-            return Ok(await _carSelectionServiceWrapper.GetModelsByManufacturerAsync(manufacturerId, lang));
+            return Ok(await _carSelectionServiceWrapper.GetModelsByManufacturerAsync(manufacturerId, page, lang));
         }
 
         [HttpGet]
@@ -61,23 +67,29 @@ namespace CParts.Web.Controllers
         [Route("articles/{articleId}/applicable/manufacturers")]
         public async Task<IActionResult> GetApplicabilityManufacturers(int articleId, int lang = 4)
         {
-            return Ok(await _applicabilityServiceWrapper.GetManufacturersWithApplicableModels(articleId,lang));
+            return Ok(await _applicabilityServiceWrapper.GetManufacturersWithApplicableModels(articleId, lang));
         }
-        
+
         [HttpGet]
         [Route("articles/{articleId}/applicable/manufacturers/{manufacturerId}/models")]
         public async Task<IActionResult> GetApplicabilityModels(int articleId, int manufacturerId, int lang = 4)
         {
             return Ok(await _applicabilityServiceWrapper.GetModelsWithApplicableTypes(articleId, manufacturerId, lang));
         }
-        
+
         [HttpGet]
         [Route("articles/{articleId}/applicable/manufacturers/{manufacturerId}/models/{modelId}/types")]
-        public async Task<IActionResult> GetApplicabilityTypes(int articleId, int manufacturerId, int modelId, int lang = 4)
+        public async Task<IActionResult> GetApplicabilityTypes(int articleId, int manufacturerId, int modelId,
+            int lang = 4)
         {
             return Ok(await _applicabilityServiceWrapper.GetApplicableTypesByModel(articleId, modelId, lang));
         }
-        
 
+        [HttpGet]
+        [Route("articles/{articleId}/analogues")]
+        public async Task<IActionResult> GetAnalogues(int articleId)
+        {
+            return Ok(await _analoguesServiceWrapper.GetAnaloguesForArticleAsync(articleId));
+        }
     }
 }

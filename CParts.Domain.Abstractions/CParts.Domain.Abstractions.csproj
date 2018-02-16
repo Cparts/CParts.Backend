@@ -5,6 +5,10 @@
   <ItemGroup>
     <ProjectReference Include="..\CParts.Domain.Core\CParts.Domain.Core.csproj" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.0.1" />
+    <ProjectReference Include="..\CParts.Framework\CParts.Framework.csproj">
+      <Project>{7A80D096-AD4B-4DE1-88C9-AE4D3876B2F3}</Project>
+      <Name>CParts.Framework</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Repositories\Internal\Base" />

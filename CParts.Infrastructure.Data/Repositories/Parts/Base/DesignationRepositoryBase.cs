@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 using System.Threading.Tasks;
 using CParts.Domain.Abstractions.Contexts;
 using CParts.Domain.Abstractions.Repositories.Parts.Base;
@@ -103,9 +104,20 @@ namespace CParts.Infrastructure.Data.Repositories.Parts.Base
                     var entityPropertyLinks = _entityHashPropertyLinks[entity.GetHashCode()];
                     foreach (var prop in _targetPropertyList)
                     {
-                        prop.SetValue(entity,
-                            _designationList.FirstOrDefault(x =>
-                                x.Id == entityPropertyLinks.FirstOrDefault(y => y.Name == prop.Name.ToLower())?.Id));
+                        var designations = _designationList.Where(x =>
+                                x.Id == entityPropertyLinks.FirstOrDefault(y => y.Name == prop.Name.ToLower())?.Id)
+                            .ToList();
+
+                        var targetDesignation = designations.FirstOrDefault();
+                        if (designations.Count > 1)
+                        {
+                            targetDesignation.Text.Text = designations.Aggregate(new StringBuilder(),
+                                    (builder, designation) => builder.Append(designation.Text.Text).Append(", "))
+                                .ToString()
+                                .TrimEnd(' ', ',');
+                        }
+
+                        prop.SetValue(entity, targetDesignation);
                     }
                 }
             }

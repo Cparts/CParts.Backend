@@ -31,8 +31,7 @@ namespace CParts.Infrastructure.Business
         {
             var links = await _groupToArticleLinkRepository.GetByTypeAndSearchNode(typeId, nodeId);
             var articles = links.Select(x => x.Article).ToList();
-            await SetDesignationsForRangeAsync(articles);
-
+            await _generalDesignationsRepository.AppendDesignationsToCollection(articles);
             return articles;
         }
 
@@ -41,23 +40,6 @@ namespace CParts.Infrastructure.Business
             var articleIds = articles.Select(x => x.Id).ToList();
             var originals = await _articleLookupRepository.FindOriginalsForAritclesRange(articleIds);
             return originals;
-        }
-
-        private async Task<ICollection<Article>> SetDesignationsForRangeAsync(ICollection<Article> articles)
-        {
-//            var designationIds = articles.Select(x => x.DesignationId);
-//            designationIds = designationIds.Concat(articles.Select(x => x.CompleteDesignationId));
-//
-//            var designations = await _generalDesignationsRepository.GetByIdAndLanguageAsync(designationIds, 4);
-//            foreach (var article in articles)
-//            {
-//                article.Designation = designations.SingleOrDefault(x => x.Id == article.DesignationId);
-//                article.CompleteDesignation = designations.SingleOrDefault(x => x.Id == article.CompleteDesignationId);
-//            }
-
-            await _generalDesignationsRepository.AppendDesignationsToCollection(articles);
-
-            return articles;
         }
 
         public async Task<ICollection<ArticleCriteria>> GetCriteriasAsync(int articleId)
@@ -69,36 +51,8 @@ namespace CParts.Infrastructure.Business
         {
             var ids = articles.Select(x => x.Id);
             var criterias = await _articleCriteriasRepository.GetByArticleIds(ids);
-            await SetDesignationsForCriteriasRangeAsync(criterias);
-            return criterias;
-        }
-
-        public async Task<ICollection<ArticleCriteria>> SetDesignationsForCriteriasRangeAsync(
-            ICollection<ArticleCriteria> criterias, int langId = 4)
-        {
             await _generalDesignationsRepository.AppendDesignationsToCollection(criterias);
             await _generalDesignationsRepository.AppendDesignationsToCollection(criterias.Select(x => x.Criteria).ToList());
-/*            var designationIds = criterias.Select(x =>
-                x.Criteria.ShortDesignationId);
-            designationIds = designationIds.Concat(criterias.Select(x => x.Criteria.DesignationId).Cast<int?>());
-            designationIds = designationIds.Concat(criterias.Select(x => x.Criteria.UnitDesignationId));
-            designationIds = designationIds.Concat(criterias.Select(x => x.KvDesignationId));
-
-            var designations = await _generalDesignationsRepository.GetByIdAndLanguageAsync(designationIds, langId);
-
-            foreach (var articleCriteria in criterias)
-            {
-                var innerCriteria = articleCriteria.Criteria;
-                innerCriteria.Designation =
-                    designations.SingleOrDefault(x => x.Id == innerCriteria.DesignationId);
-                innerCriteria.ShortDesignation =
-                    designations.SingleOrDefault(x => x.Id == innerCriteria.ShortDesignationId);
-                innerCriteria.UnitDesignation =
-                    designations.SingleOrDefault(x => x.Id == innerCriteria.UnitDesignationId);
-                articleCriteria.KvDesignation =
-                    designations.SingleOrDefault(x => x.Id == articleCriteria.KvDesignationId);
-            }*/
-
             return criterias;
         }
     }

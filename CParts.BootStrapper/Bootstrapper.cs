@@ -80,10 +80,12 @@ namespace CParts.BootStrapper
             services.AddTransient<ISearchTreeService, SearchTreeService>();
             services.AddTransient<IPartApplicabilityService, PartApplicabilityService>();
             services.AddTransient<ICarSelectionService, CarSelectionService>();
+            services.AddTransient<IArticleAnaloguesService, ArticleAnaloguesService>();
 
             services.AddTransient<IArticlesServiceWrapper, ArticlesServiceWrapper>();
             services.AddTransient<IApplicabilityServiceWrapper, ApplicabilityServiceWrapper>();
             services.AddTransient<ICarSelectionServiceWrapper, CarSelectionServiceWrapper>();
+            services.AddTransient<IAnaloguesServiceWrapper, AnaloguesServiceWrapper>();
             
             return services;
         }

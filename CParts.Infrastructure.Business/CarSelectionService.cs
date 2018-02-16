@@ -12,14 +12,17 @@ namespace CParts.Infrastructure.Business
         private readonly IModelsRepository _modelsRepository;
         private readonly ITypesRepository _typesRepository;
         private readonly IGeneralDesignationsRepository _generalDesignationsRepository;
+        private readonly ICountryDesignationsRepository _countryDesignationsRepository;
 
         public CarSelectionService(IManufacturersRepository manufacturersRepository, IModelsRepository modelsRepository,
-            ITypesRepository typesRepository, IGeneralDesignationsRepository generalDesignationsRepository)
+            ITypesRepository typesRepository, IGeneralDesignationsRepository generalDesignationsRepository,
+            ICountryDesignationsRepository countryDesignationsRepository)
         {
             _manufacturersRepository = manufacturersRepository;
             _modelsRepository = modelsRepository;
             _typesRepository = typesRepository;
             _generalDesignationsRepository = generalDesignationsRepository;
+            _countryDesignationsRepository = countryDesignationsRepository;
         }
 
         public async Task<ICollection<Manufacturer>> GetManufacturersAsync()
@@ -28,16 +31,16 @@ namespace CParts.Infrastructure.Business
             return manufacturers;
         }
 
-        public async Task<ICollection<Model>> GetByManufacturerAsync(int manufacturerId, int languageId = 4)
+        public async Task<ICollection<Model>> GetByManufacturerAsync(int manufacturerId, int page = 1, int languageId = 4)
         {
-            var models = await _modelsRepository.GetByManufacturerAsync(manufacturerId);
+            var models = await _modelsRepository.GetByManufacturerAsync(manufacturerId, page);
+            await _countryDesignationsRepository.AppendDesignationsToCollection(models, languageId);
             return models;
         }
 
         public async Task<ICollection<Type>> GetByModelAsync(int modelId, int languageId)
         {
             var types = await _typesRepository.GetByModelAsync(modelId);
-            await _generalDesignationsRepository.AppendDesignationsToCollection(types, languageId);
             return types;
         }
     }
