@@ -130,7 +130,7 @@ namespace CParts.BootStrapper
             services.AddTransient<IPartApplicabilityService, PartApplicabilityService>();
             services.AddTransient<ICarSelectionService, CarSelectionService>();
             services.AddTransient<IArticleAnaloguesService, ArticleAnaloguesService>();
-            services.AddTransient<IAuthorizationService, AuthroizationService>();
+            services.AddTransient<IAuthorizationService, AuthorizationService>();
             services.AddTransient<IEmailService, MockEmailService>();
 
             //Providers

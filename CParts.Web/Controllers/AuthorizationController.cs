@@ -11,8 +11,8 @@ namespace CParts.Web.Controllers
     [Route("api/v1/auth")]
     public class AuthorizationController : Controller
     {
-        private readonly IAuthorizationServiceMapper _authorizationServiceMapper; 
-        
+        private readonly IAuthorizationServiceMapper _authorizationServiceMapper;
+
         public AuthorizationController(IAuthorizationServiceMapper authorizationServiceMapper)
         {
             _authorizationServiceMapper = authorizationServiceMapper;
@@ -37,7 +37,10 @@ namespace CParts.Web.Controllers
         [Authorize]
         public async Task<IActionResult> ForgotPassword([FromBody] ForgottenPasswordViewModel forgotPasswordModel)
         {
+            if (!ModelState.IsValid)
+                return BadRequest("Some parameters are missing or have invalid values");
             throw new NotImplementedException();
+//            throw Ok(await _authorizationServiceMapper)
         }
 
         [HttpPost]

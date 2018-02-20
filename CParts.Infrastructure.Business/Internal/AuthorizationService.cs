@@ -13,18 +13,17 @@ using Microsoft.Extensions.Options;
 
 namespace CParts.Infrastructure.Business.Internal
 {
-    public class AuthroizationService : IAuthorizationService
+    public class AuthorizationService : IAuthorizationService
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
 
-        private readonly IApplicationUsersRepository _applicationUsersRepository;
-
-        //TODO: Find way to avoid injecting of services into services
         private readonly IEmailService _emailService;
         private readonly JwtSettings _jwtSettings;
 
-        public AuthroizationService(UserManager<ApplicationUser> userManager,
+        private readonly IApplicationUsersRepository _applicationUsersRepository;
+
+        public AuthorizationService(UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager, IApplicationUsersRepository applicationUsersRepository,
             IOptions<JwtSettings> jwtSettingsWrapper, IEmailService emailService)
         {
@@ -35,9 +34,12 @@ namespace CParts.Infrastructure.Business.Internal
             _jwtSettings = jwtSettingsWrapper.Value;
         }
 
-        public async Task<IdentityResult> ChangePasswordAsync(string email, string oldPassword, string newPassword)
+        public async Task<IdentityResult> ChangePasswordAsync(ApplicationUser user, string oldPassword,
+            string newPassword)
         {
-            var user = await _applicationUsersRepository.GetByEmailAsync(email);
+            if (user == null)
+                throw new ArgumentNullException();
+
             var identityResult = await _userManager.ChangePasswordAsync(user, oldPassword, newPassword);
 
             return identityResult;
@@ -45,25 +47,26 @@ namespace CParts.Infrastructure.Business.Internal
 
         public async Task<IdentityResult> RegisterUserAsync(ApplicationUser newUser, string password)
         {
+            if (newUser == null)
+                throw new ArgumentNullException();
+
             var identityResult = await _userManager.CreateAsync(newUser, password);
 
             return identityResult;
         }
 
-        public async Task<string> GenerateAndSendPasswordResetTokenAsync(string email)
+        public async Task<bool> GenerateAndSendPasswordResetTokenAsync(string email)
         {
             var user = await _applicationUsersRepository.GetByEmailAsync(email);
 
             if (user == null)
-            {
-                return null;
-            }
+                return false;
 
             var token = await _userManager.GeneratePasswordResetTokenAsync(user);
-            
+
             var result = await _emailService.SendForgetPasswordTokenAsync(email, token);
-            
-            return token;
+
+            return result;
         }
 
         public async Task<string> TryLoginAndGenerateTokenAsync(string email, string password, bool isPersistant)

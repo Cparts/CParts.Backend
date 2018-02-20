@@ -6,9 +6,10 @@ namespace CParts.Business.Abstractions.Internal
 {
     public interface IAuthorizationService
     {
-        Task<IdentityResult> ChangePasswordAsync(string email, string oldPassword, string newPassword);
+        Task<IdentityResult> ChangePasswordAsync(ApplicationUser user, string oldPassword,
+            string newPassword);
         Task<IdentityResult> RegisterUserAsync(ApplicationUser newUser, string password);
-        Task<string> GenerateAndSendPasswordResetTokenAsync(string email);
         Task<string> TryLoginAndGenerateTokenAsync(string email, string password, bool isPersistant);
+        Task<bool> GenerateAndSendPasswordResetTokenAsync(string email);
     }
 }

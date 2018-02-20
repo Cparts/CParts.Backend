@@ -44,7 +44,9 @@ namespace CParts.Infrastructure.Services.Internal
                 UserName = model.Username,
                 Email = model.Email
             };
+
             var registrationResult = await _authorizationService.RegisterUserAsync(newUser, model.Password);
+
             if (!registrationResult.Succeeded)
             {
                 var errors = string.Join(",",
@@ -55,14 +57,33 @@ namespace CParts.Infrastructure.Services.Internal
             return RegistrationResultViewModel.Successful();
         }
 
-        public async Task SendPasswordResetLinkAsync(ForgottenPasswordViewModel model)
+        public async Task<ResetPasswordResultViewModel> SendPasswordResetLinkAsync(ForgottenPasswordViewModel model)
         {
-            throw new NotImplementedException();
+            var isSuccessful = await _authorizationService.GenerateAndSendPasswordResetTokenAsync(model.Email);
+            return new ResetPasswordResultViewModel
+            {
+                Success = isSuccessful
+            };
         }
 
-        public async Task ChangeUsersPasswordAsync(PasswordChangeViewModel model)
+        public async Task<ChangePasswordResultViewModel> ChangeUsersPasswordAsync(PasswordChangeViewModel model)
         {
-            throw new NotImplementedException();
+            var passwordChangeResult =
+                await _authorizationService.ChangePasswordAsync(model.User, model.OldPassword, model.NewPassword);
+
+
+            string errors = null;
+            if (!passwordChangeResult.Succeeded)
+            {
+                errors = string.Join(",",
+                    ((IEnumerable<IdentityError>) passwordChangeResult.Errors).Select(x => x.Description));
+            }
+
+            return new ChangePasswordResultViewModel
+            {
+                Success = passwordChangeResult.Succeeded,
+                Message = passwordChangeResult.Succeeded ? "Successfuly changed password" : errors
+            };
         }
     }
 }
