@@ -1,9 +1,6 @@
 ﻿using System.Threading.Tasks;
-using CParts.Business.Abstractions;
-using CParts.Services.Abstractions;
+using CParts.Business.Abstractions.Parts;
 using CParts.Services.Abstractions.Parts;
-using CParts.Web.Filters;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

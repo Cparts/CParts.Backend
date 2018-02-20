@@ -1,13 +1,11 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using CParts.Business.Abstractions.Parts;
 using CParts.Domain.Abstractions.Repositories.Parts;
-using CParts.Domain.Abstractions.Repositories.Parts.Base;
 using CParts.Domain.Core.Model.Parts;
-using CParts.Business.Abstractions;
 
-namespace CParts.Infrastructure.Business
+namespace CParts.Infrastructure.Business.Parts
 {
     public class ArticlesService : IArticlesService
     {

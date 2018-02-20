@@ -1,17 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
 using System.Threading.Tasks;
-using CParts.Domain.Core.Model.Internal;
 using CParts.Services.Abstractions.Internal;
 using CParts.Services.Abstractions.Internal.ViewModels;
 using CParts.Web.Filters;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
 
 namespace CParts.Web.Controllers
 {

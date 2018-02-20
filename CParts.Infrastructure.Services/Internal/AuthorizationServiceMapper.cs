@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using CParts.Business.Abstractions;
+using CParts.Business.Abstractions.Internal;
 using CParts.Domain.Core.Model.Internal;
 using CParts.Services.Abstractions.Internal;
 using CParts.Services.Abstractions.Internal.ViewModels;
@@ -53,6 +53,16 @@ namespace CParts.Infrastructure.Services.Internal
             }
 
             return RegistrationResultViewModel.Successful();
+        }
+
+        public async Task SendPasswordResetLinkAsync(ForgottenPasswordViewModel model)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task ChangeUsersPasswordAsync(PasswordChangeViewModel model)
+        {
+            throw new NotImplementedException();
         }
     }
 }

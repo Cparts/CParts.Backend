@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using CParts.Business.Abstractions;
+using CParts.Business.Abstractions.Parts;
 using CParts.Domain.Abstractions.Repositories.Parts;
 using CParts.Domain.Core.Model.Parts;
 
-namespace CParts.Infrastructure.Business
+namespace CParts.Infrastructure.Business.Parts
 {
     public class CarSelectionService : ICarSelectionService
     {

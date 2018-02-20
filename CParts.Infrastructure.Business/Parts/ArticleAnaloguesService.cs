@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using CParts.Business.Abstractions;
+using CParts.Business.Abstractions.Parts;
 using CParts.Domain.Abstractions.QueryModels;
 using CParts.Domain.Abstractions.Repositories.Parts;
 
-namespace CParts.Infrastructure.Business
+namespace CParts.Infrastructure.Business.Parts
 {
     public class ArticleAnaloguesService : IArticleAnaloguesService
     {

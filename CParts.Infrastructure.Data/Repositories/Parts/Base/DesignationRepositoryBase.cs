@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -10,7 +9,6 @@ using CParts.Domain.Abstractions.Repositories.Parts.Base;
 using CParts.Domain.Core.Model.Parts.Contracts;
 using CParts.Infrastructure.Data.Repositories.Base;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 
 namespace CParts.Infrastructure.Data.Repositories.Parts.Base
 {

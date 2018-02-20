@@ -1,20 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
-using System.Text;
 using System.Threading.Tasks;
-using CParts.Business.Abstractions;
+using CParts.Business.Abstractions.Internal;
+using CParts.Business.Abstractions.ThirdParty;
 using CParts.Domain.Abstractions.Repositories.Internal;
 using CParts.Domain.Core.Model.Internal;
 using CParts.Framework.Options;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel;
-using Microsoft.IdentityModel.Tokens;
 
-namespace CParts.Infrastructure.Business
+namespace CParts.Infrastructure.Business.Internal
 {
     public class AuthroizationService : IAuthorizationService
     {
@@ -24,18 +21,17 @@ namespace CParts.Infrastructure.Business
         private readonly IApplicationUsersRepository _applicationUsersRepository;
 
         //TODO: Find way to avoid injecting of services into services
-//        private readonly IEmailService _emailService;
+        private readonly IEmailService _emailService;
         private readonly JwtSettings _jwtSettings;
 
         public AuthroizationService(UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager, IApplicationUsersRepository applicationUsersRepository,
-            IOptions<JwtSettings> jwtSettingsWrapper)
-            //,IEmailService emailService)
+            IOptions<JwtSettings> jwtSettingsWrapper, IEmailService emailService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _applicationUsersRepository = applicationUsersRepository;
-//            _emailService = emailService;
+            _emailService = emailService;
             _jwtSettings = jwtSettingsWrapper.Value;
         }
 
@@ -64,8 +60,9 @@ namespace CParts.Infrastructure.Business
             }
 
             var token = await _userManager.GeneratePasswordResetTokenAsync(user);
-            //TODO: Mock thing. Will be changed in future
-            //var result = await _emailService.SendAsync(email, token);
+            
+            var result = await _emailService.SendForgetPasswordTokenAsync(email, token);
+            
             return token;
         }
 

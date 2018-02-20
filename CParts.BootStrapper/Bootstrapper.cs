@@ -4,16 +4,20 @@ using CParts.Domain.Abstractions.Contexts;
 using CParts.Domain.Abstractions.Repositories.Parts;
 using CParts.Domain.Core.Model.Internal;
 using CParts.Framework.Options;
-using CParts.Infrastructure.Business;
 using CParts.Infrastructure.Data.Contexts;
 using CParts.Infrastructure.Data.Repositories.Parts;
-using CParts.Business.Abstractions;
+using CParts.Business.Abstractions.Internal;
+using CParts.Business.Abstractions.Parts;
+using CParts.Business.Abstractions.ThirdParty;
+using CParts.Business.Abstractions.ThirdParty.Providers;
 using CParts.Domain.Abstractions.Repositories.Internal;
+using CParts.Infrastructure.Business.Internal;
+using CParts.Infrastructure.Business.Parts;
+using CParts.Infrastructure.Business.ThirdParty;
+using CParts.Infrastructure.Business.ThirdParty.Providers;
 using CParts.Infrastructure.Data.Repositories.Internal;
-using CParts.Infrastructure.Services;
 using CParts.Infrastructure.Services.Internal;
 using CParts.Infrastructure.Services.Parts;
-using CParts.Services.Abstractions;
 using CParts.Services.Abstractions.Internal;
 using CParts.Services.Abstractions.Parts;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -120,14 +124,19 @@ namespace CParts.BootStrapper
             services.AddTransient<IArticleLookupRepository, ArticleLookupRepository>();
             services.AddTransient<IArticleCriteriasRepository, ArticleCriteriasRepository>();
 
-            //
+            //Services
             services.AddTransient<IArticlesService, ArticlesService>();
             services.AddTransient<ISearchTreeService, SearchTreeService>();
             services.AddTransient<IPartApplicabilityService, PartApplicabilityService>();
             services.AddTransient<ICarSelectionService, CarSelectionService>();
             services.AddTransient<IArticleAnaloguesService, ArticleAnaloguesService>();
             services.AddTransient<IAuthorizationService, AuthroizationService>();
+            services.AddTransient<IEmailService, MockEmailService>();
 
+            //Providers
+            services.AddTransient<IEmailProvider, MockEmailProvider>();
+            
+            //Service mappers
             services.AddTransient<IArticlesServiceMapper, ArticlesServiceMapper>();
             services.AddTransient<IApplicabilityServiceMapper, ApplicabilityServiceMapper>();
             services.AddTransient<ICarSelectionServiceMapper, CarSelectionServiceMapper>();

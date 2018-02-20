@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using CParts.Domain.Abstractions.Contexts;
 using CParts.Domain.Abstractions.Repositories.Internal;
 using CParts.Domain.Core.Model.Internal;
-using CParts.Infrastructure.Data.Contexts;
 using CParts.Infrastructure.Data.Repositories.Base;
 using Microsoft.EntityFrameworkCore;
 

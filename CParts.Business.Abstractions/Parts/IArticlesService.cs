@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using CParts.Domain.Core.Model.Parts;
 
-namespace CParts.Business.Abstractions
+namespace CParts.Business.Abstractions.Parts
 {
     public interface IArticlesService
     {

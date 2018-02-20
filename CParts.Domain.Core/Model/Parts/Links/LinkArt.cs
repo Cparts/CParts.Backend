@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace CParts.Domain.Core.Model.Parts.Links
+﻿namespace CParts.Domain.Core.Model.Parts.Links
 {
     public partial class LinkArt
     {

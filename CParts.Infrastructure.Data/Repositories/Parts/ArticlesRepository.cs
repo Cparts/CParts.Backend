@@ -1,5 +1,4 @@
 ﻿using CParts.Domain.Abstractions.Contexts;
-using CParts.Domain.Abstractions.Contexts.Base;
 using CParts.Domain.Abstractions.Repositories.Parts;
 using CParts.Domain.Core.Model.Parts;
 using CParts.Infrastructure.Data.Repositories.Base;

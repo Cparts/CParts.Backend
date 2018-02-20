@@ -4,7 +4,6 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using CParts.Domain.Abstractions.Contexts;
-using CParts.Domain.Abstractions.Contexts.Base;
 using CParts.Domain.Abstractions.Repositories.Parts;
 using CParts.Domain.Core.Model.Parts;
 using CParts.Framework;

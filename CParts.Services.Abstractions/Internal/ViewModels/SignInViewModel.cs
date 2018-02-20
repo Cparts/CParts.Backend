@@ -1,6 +1,4 @@
-﻿using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
-using CParts.Domain.Core.Model.Internal;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace CParts.Services.Abstractions.Internal.ViewModels
 {

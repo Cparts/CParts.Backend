@@ -1,6 +1,4 @@
-﻿using CParts.Domain.Core.Model.Internal;
-
-namespace CParts.Services.Abstractions.Internal.ViewModels.Results
+﻿namespace CParts.Services.Abstractions.Internal.ViewModels.Results
 {
     public class SignInResultViewModel
     {

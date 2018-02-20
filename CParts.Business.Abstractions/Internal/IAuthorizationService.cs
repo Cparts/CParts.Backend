@@ -2,7 +2,7 @@
 using CParts.Domain.Core.Model.Internal;
 using Microsoft.AspNetCore.Identity;
 
-namespace CParts.Business.Abstractions
+namespace CParts.Business.Abstractions.Internal
 {
     public interface IAuthorizationService
     {

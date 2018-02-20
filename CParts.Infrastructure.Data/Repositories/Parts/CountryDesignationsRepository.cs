@@ -1,11 +1,9 @@
 ﻿using System.Collections.Generic;
 using CParts.Domain.Abstractions.Contexts;
-using CParts.Domain.Abstractions.Contexts.Base;
 using CParts.Domain.Abstractions.Repositories.Parts;
 using CParts.Domain.Abstractions.Repositories.Parts.Base;
 using CParts.Domain.Core.Model.Parts;
 using CParts.Infrastructure.Data.Repositories.Parts.Base;
-using Microsoft.Extensions.Logging;
 
 namespace CParts.Infrastructure.Data.Repositories.Parts
 {

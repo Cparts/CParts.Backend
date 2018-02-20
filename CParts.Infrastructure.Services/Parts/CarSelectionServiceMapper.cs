@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using CParts.Business.Abstractions;
+using CParts.Business.Abstractions.Parts;
 using CParts.Domain.Core.Model.Parts;
 using CParts.Services.Abstractions.Parts;
 using CParts.Services.Abstractions.Parts.ViewModels;

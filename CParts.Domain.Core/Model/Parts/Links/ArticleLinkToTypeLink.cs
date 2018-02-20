@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace CParts.Domain.Core.Model.Parts.Links
+﻿namespace CParts.Domain.Core.Model.Parts.Links
 {
     public partial class ArticleLinkToTypeLink
     {

@@ -1,12 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CParts.Business.Abstractions.Parts;
 using CParts.Domain.Abstractions.Repositories.Parts;
 using CParts.Domain.Core.Model.Parts;
-using CParts.Business.Abstractions;
-using Microsoft.EntityFrameworkCore;
 
-namespace CParts.Infrastructure.Business
+namespace CParts.Infrastructure.Business.Parts
 {
     public class SearchTreeService : ISearchTreeService
     {

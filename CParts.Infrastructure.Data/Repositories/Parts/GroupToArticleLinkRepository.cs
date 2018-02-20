@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using CParts.Domain.Abstractions.Contexts;
 using CParts.Domain.Abstractions.Repositories.Parts;
 using CParts.Domain.Core.Model.Parts.Links;
-using CParts.Framework;
 using CParts.Infrastructure.Data.Repositories.Base;
 using Microsoft.EntityFrameworkCore;
 
