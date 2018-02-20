@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using CParts.Services.Abstractions.ViewModels;
+using CParts.Services.Abstractions.Parts.ViewModels;
 
-namespace CParts.Services.Abstractions
+namespace CParts.Services.Abstractions.Parts
 {
-    public interface IAnaloguesServiceWrapper
+    public interface IAnaloguesServiceMapper
     {
         Task<ICollection<ArticleAnalogueViewModel>> GetAnaloguesForArticleAsync(int articleId);
     }

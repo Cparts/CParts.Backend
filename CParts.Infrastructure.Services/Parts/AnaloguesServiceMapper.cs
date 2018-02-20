@@ -1,18 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CParts.Business.Abstractions;
-using CParts.Services.Abstractions;
-using CParts.Services.Abstractions.ViewModels;
+using CParts.Services.Abstractions.Parts;
+using CParts.Services.Abstractions.Parts.ViewModels;
 
-namespace CParts.Infrastructure.Services
+namespace CParts.Infrastructure.Services.Parts
 {
-    public class AnaloguesServiceWrapper : IAnaloguesServiceWrapper
+    public class AnaloguesServiceMapper : IAnaloguesServiceMapper
     {
         private readonly IArticleAnaloguesService _articleAnaloguesService;
 
-        public AnaloguesServiceWrapper(IArticleAnaloguesService articleAnaloguesService)
+        public AnaloguesServiceMapper(IArticleAnaloguesService articleAnaloguesService)
         {
             _articleAnaloguesService = articleAnaloguesService;
         }

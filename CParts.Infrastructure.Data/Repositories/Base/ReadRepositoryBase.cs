@@ -37,10 +37,5 @@ namespace CParts.Infrastructure.Data.Repositories.Base
 
             return await fullSet.ToListAsync();
         }
-
-        public virtual async Task<TResult> SelectAsync<TResult>(Func<IQueryable<TEntity>, Task<TResult>> query)
-        {
-            return await query(DbSet.AsNoTracking());
-        }
     }
 }

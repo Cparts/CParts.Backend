@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using CParts.Domain.Core.Model.Parts;
-using CParts.Services.Abstractions.ViewModels;
+using CParts.Services.Abstractions.Parts.ViewModels;
 
-namespace CParts.Services.Abstractions
+namespace CParts.Services.Abstractions.Parts
 {
-    public interface IArticlesServiceWrapper
+    public interface IArticlesServiceMapper
     {
         Task<ICollection<ArticleViewModel>> GetByTypeAndTreeNodeAsync(int typeId, int treeNode, int lang = 4);
     }

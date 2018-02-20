@@ -1,4 +1,4 @@
-﻿namespace CParts.Services.Abstractions.ViewModels
+﻿namespace CParts.Services.Abstractions.Parts.ViewModels
 {
     public class ApplicableManufacturerViewModel
     {

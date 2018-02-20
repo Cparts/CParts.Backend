@@ -5,7 +5,10 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using CParts.Domain.Core.Model.Internal;
-using CParts.Web.ViewModels;
+using CParts.Services.Abstractions.Internal;
+using CParts.Services.Abstractions.Internal.ViewModels;
+using CParts.Web.Filters;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -15,36 +18,43 @@ namespace CParts.Web.Controllers
     [Route("api/v1/auth")]
     public class AuthorizationController : Controller
     {
-        private readonly UserManager<ApplicationUser> _userManager;
-
-        public AuthorizationController(UserManager<ApplicationUser> userManager)
+        private readonly IAuthorizationServiceMapper _authorizationServiceMapper; 
+        
+        public AuthorizationController(IAuthorizationServiceMapper authorizationServiceMapper)
         {
-            _userManager = userManager;
+            _authorizationServiceMapper = authorizationServiceMapper;
         }
 
-
-        public async Task<IActionResult> Login([FromBody] LoginViewModel model)
+        [HttpPost]
+        [OnlyAnonymous]
+        [Route("register")]
+        public async Task<IActionResult> Register([FromBody] RegisterViewModel registerModel)
         {
-            var credentials = new SigningCredentials(GenerateKey(), SecurityAlgorithms.HmacSha256);
-            var claims = new List<Claim>();
-            var token = new JwtSecurityToken(
-                issuer: "",
-                audience: "",
-                claims: claims,
-                notBefore: DateTime.Now,
-                expires: DateTime.Now.AddDays(10),
-                signingCredentials: credentials
-            );
-
-            return new JsonMessageResult("Ok", 200, new {token = new JwtSecurityTokenHandler().WriteToken(token)});
+            if (!ModelState.IsValid)
+                return BadRequest();
+            return Ok(await _authorizationServiceMapper.RegisterUserAsync(registerModel));
         }
 
-        public SecurityKey GenerateKey()
+        [Authorize]
+        public async Task<IActionResult> ChangePassword([FromBody] PasswordChangeViewModel passwordChangeViewModel)
         {
-            var key = "hmac231sldjpoapo3i42pk234lk2kl3lkjl6jlj34kjpou2v4k7jh";
-            var st = Encoding.UTF8.GetBytes(key);
-            var securityKey = new SymmetricSecurityKey(st);
-            return securityKey;
+            throw new NotImplementedException();
+        }
+
+        [Authorize]
+        public async Task<IActionResult> ForgotPassword([FromBody] ForgottenPasswordViewModel forgotPasswordModel)
+        {
+            throw new NotImplementedException();
+        }
+
+        [HttpPost]
+        [OnlyAnonymous]
+        [Route("login")]
+        public async Task<IActionResult> Login([FromBody] SignInViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest("Some parameters are missing or have invalid values");
+            return Ok(await _authorizationServiceMapper.LoginAndGenerateTokenAsync(model));
         }
     }
 }

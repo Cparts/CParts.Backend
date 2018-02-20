@@ -1,6 +1,10 @@
 ﻿using System.Threading.Tasks;
 using CParts.Business.Abstractions;
 using CParts.Services.Abstractions;
+using CParts.Services.Abstractions.Parts;
+using CParts.Web.Filters;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CParts.Web.Controllers
@@ -9,44 +13,43 @@ namespace CParts.Web.Controllers
     public class PartsController : Controller
     {
         private readonly ISearchTreeService _searchTreeService;
-        private readonly IArticlesServiceWrapper _articlesServiceWrapper;
-        private readonly IApplicabilityServiceWrapper _applicabilityServiceWrapper;
-        private readonly ICarSelectionServiceWrapper _carSelectionServiceWrapper;
-        private readonly IArticleAnaloguesService _articleAnaloguesService;
-        private readonly IAnaloguesServiceWrapper _analoguesServiceWrapper;
+        private readonly IArticlesServiceMapper _articlesServiceMapper;
+        private readonly IApplicabilityServiceMapper _applicabilityServiceMapper;
+        private readonly ICarSelectionServiceMapper _carSelectionServiceMapper;
+        private readonly IAnaloguesServiceMapper _analoguesServiceMapper;
 
         public PartsController(ISearchTreeService searchTreeService,
-            IArticlesServiceWrapper articlesServiceWrapper, IApplicabilityServiceWrapper applicabilityServiceWrapper,
-            ICarSelectionServiceWrapper carSelectionServiceWrapper, IArticleAnaloguesService articleAnaloguesService,
-            IAnaloguesServiceWrapper analoguesServiceWrapper)
+            IArticlesServiceMapper articlesServiceMapper, IApplicabilityServiceMapper applicabilityServiceMapper,
+            ICarSelectionServiceMapper carSelectionServiceMapper,
+            IAnaloguesServiceMapper analoguesServiceMapper)
         {
             _searchTreeService = searchTreeService;
-            _articlesServiceWrapper = articlesServiceWrapper;
-            _applicabilityServiceWrapper = applicabilityServiceWrapper;
-            _carSelectionServiceWrapper = carSelectionServiceWrapper;
-            _articleAnaloguesService = articleAnaloguesService;
-            _analoguesServiceWrapper = analoguesServiceWrapper;
+            _articlesServiceMapper = articlesServiceMapper;
+            _applicabilityServiceMapper = applicabilityServiceMapper;
+            _carSelectionServiceMapper = carSelectionServiceMapper;
+            _analoguesServiceMapper = analoguesServiceMapper;
         }
 
         [HttpGet]
+        [Authorize]
         [Route("manufacturers")]
         public async Task<IActionResult> GetManufacturers()
         {
-            return Ok(await _carSelectionServiceWrapper.GetAllManufacturerAsync());
+            return Ok(await _carSelectionServiceMapper.GetAllManufacturerAsync());
         }
 
         [HttpGet]
         [Route("manufacturers/{manufacturerId}/models")]
         public async Task<IActionResult> GetModels(int manufacturerId, int page = 1, int lang = 4)
         {
-            return Ok(await _carSelectionServiceWrapper.GetModelsByManufacturerAsync(manufacturerId, page, lang));
+            return Ok(await _carSelectionServiceMapper.GetModelsByManufacturerAsync(manufacturerId, page, lang));
         }
 
-        [HttpGet]
+        [HttpGet]    
         [Route("models/{modelId}/types")]
         public async Task<IActionResult> GetTypes(int modelId, int lang = 4)
         {
-            return Ok(await _carSelectionServiceWrapper.GetTypesByModelAsync(modelId, lang));
+            return Ok(await _carSelectionServiceMapper.GetTypesByModelAsync(modelId, lang));
         }
 
         [HttpGet]
@@ -60,21 +63,21 @@ namespace CParts.Web.Controllers
         [Route("types/{typeId}/searchtree/{searchTree}/articles")]
         public async Task<IActionResult> GetArticles(int typeId, int searchTree, int lang = 4)
         {
-            return Ok(await _articlesServiceWrapper.GetByTypeAndTreeNodeAsync(typeId, searchTree, lang));
+            return Ok(await _articlesServiceMapper.GetByTypeAndTreeNodeAsync(typeId, searchTree, lang));
         }
 
         [HttpGet]
         [Route("articles/{articleId}/applicable/manufacturers")]
         public async Task<IActionResult> GetApplicabilityManufacturers(int articleId, int lang = 4)
         {
-            return Ok(await _applicabilityServiceWrapper.GetManufacturersWithApplicableModels(articleId, lang));
+            return Ok(await _applicabilityServiceMapper.GetManufacturersWithApplicableModels(articleId, lang));
         }
 
         [HttpGet]
         [Route("articles/{articleId}/applicable/manufacturers/{manufacturerId}/models")]
         public async Task<IActionResult> GetApplicabilityModels(int articleId, int manufacturerId, int lang = 4)
         {
-            return Ok(await _applicabilityServiceWrapper.GetModelsWithApplicableTypes(articleId, manufacturerId, lang));
+            return Ok(await _applicabilityServiceMapper.GetModelsWithApplicableTypes(articleId, manufacturerId, lang));
         }
 
         [HttpGet]
@@ -82,14 +85,14 @@ namespace CParts.Web.Controllers
         public async Task<IActionResult> GetApplicabilityTypes(int articleId, int manufacturerId, int modelId,
             int lang = 4)
         {
-            return Ok(await _applicabilityServiceWrapper.GetApplicableTypesByModel(articleId, modelId, lang));
+            return Ok(await _applicabilityServiceMapper.GetApplicableTypesByModel(articleId, modelId, lang));
         }
 
         [HttpGet]
         [Route("articles/{articleId}/analogues")]
         public async Task<IActionResult> GetAnalogues(int articleId)
         {
-            return Ok(await _analoguesServiceWrapper.GetAnaloguesForArticleAsync(articleId));
+            return Ok(await _analoguesServiceMapper.GetAnaloguesForArticleAsync(articleId));
         }
     }
 }

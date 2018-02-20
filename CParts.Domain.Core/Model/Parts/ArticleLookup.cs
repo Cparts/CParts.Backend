@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.Serialization;
 using System.Text;
 using Newtonsoft.Json;
 
@@ -54,4 +55,5 @@ namespace CParts.Domain.Core.Model.Parts
         /// </summary>
         public short Sort { get; set; }
     }
+
 }

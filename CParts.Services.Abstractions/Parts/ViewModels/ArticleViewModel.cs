@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
-using CParts.Domain.Core.Model.Parts;
 using Newtonsoft.Json;
 
-namespace CParts.Services.Abstractions.ViewModels
+namespace CParts.Services.Abstractions.Parts.ViewModels
 {
     public class ArticleViewModel
     {

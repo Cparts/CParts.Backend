@@ -35,6 +35,8 @@ namespace CParts.Web
             {
                 app.UseDeveloperExceptionPage();
             }
+            
+            app.UseAuthentication();
 
             app.BootstrapMiddleware(Configuration);
             
