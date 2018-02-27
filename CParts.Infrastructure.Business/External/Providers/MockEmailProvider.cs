@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
-using CParts.Business.Abstractions.ThirdParty.Providers;
+using CParts.Business.Abstractions.External.Providers;
 
-namespace CParts.Infrastructure.Business.ThirdParty.Providers
+namespace CParts.Infrastructure.Business.External.Providers
 {
     public class MockEmailProvider : IEmailProvider
     {

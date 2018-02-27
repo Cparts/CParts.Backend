@@ -29,7 +29,7 @@ namespace CParts.Infrastructure.Business.Parts
         {
             var links = await _groupToArticleLinkRepository.GetByTypeAndSearchNode(typeId, nodeId);
             var articles = links.Select(x => x.Article).ToList();
-            await _generalDesignationsRepository.AppendDesignationsToCollection(articles);
+            await _generalDesignationsRepository.AppendDesignationsToCollectionAsync(articles);
             return articles;
         }
 
@@ -49,8 +49,8 @@ namespace CParts.Infrastructure.Business.Parts
         {
             var ids = articles.Select(x => x.Id);
             var criterias = await _articleCriteriasRepository.GetByArticleIds(ids);
-            await _generalDesignationsRepository.AppendDesignationsToCollection(criterias);
-            await _generalDesignationsRepository.AppendDesignationsToCollection(criterias.Select(x => x.Criteria).ToList());
+            await _generalDesignationsRepository.AppendDesignationsToCollectionAsync(criterias);
+            await _generalDesignationsRepository.AppendDesignationsToCollectionAsync(criterias.Select(x => x.Criteria).ToList());
             return criterias;
         }
     }

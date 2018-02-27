@@ -1,0 +1,95 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>CParts.Web</name>
+    </assembly>
+    <members>
+        <member name="M:CParts.Web.Controllers.GeneralSearchController.GetManufacturers">
+            <summary>
+            First step of general search.
+            Gets all manufacturers (non paginated)
+            </summary>
+            <returns>List of all manufacturers</returns>
+            <response code="200">Success</response>
+        </member>
+        <member name="M:CParts.Web.Controllers.GeneralSearchController.GetModels(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Second-Third step of general search. (choosing the year is frontend-sided)
+            Gets models which input {year} is between production start and production end years  
+            </summary>
+            <param name="manufacturerId">Manufacturer ID</param>
+            <param name="year">Input car production year</param>
+            <param name="lang">Language ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:CParts.Web.Controllers.GeneralSearchController.GetTypes(System.Int32,System.Int32)">
+            <summary>
+            Last step of general search.
+            Gets all types of separate model set by {modelId}
+            </summary>
+            <param name="modelId">Model ID</param>
+            <param name="lang">Language ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:CParts.Web.Controllers.PartsController.GetAllModelsPaginated(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Gets all models of manufacturer
+            </summary>
+            <param name="manufacturerId">Manufacturer ID</param>
+            <param name="page">Page number</param>
+            <param name="lang">Language ID</param>
+            <returns>Returns models of specified manufacturer on page specified by parameter</returns>
+        </member>
+        <member name="M:CParts.Web.Controllers.PartsController.GetNodes(System.Int32,System.Nullable{System.Int32})">
+            <summary>
+            
+            </summary>
+            <param name="typeId"></param>
+            <param name="searchTree"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CParts.Web.Controllers.PartsController.GetArticles(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="typeId"></param>
+            <param name="searchTree"></param>
+            <param name="lang"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CParts.Web.Controllers.PartsController.GetApplicabilityManufacturers(System.Int32,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="articleId"></param>
+            <param name="lang"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CParts.Web.Controllers.PartsController.GetApplicabilityModels(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="articleId"></param>
+            <param name="manufacturerId"></param>
+            <param name="lang"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CParts.Web.Controllers.PartsController.GetApplicabilityTypes(System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Some do
+            </summary>
+            <param name="articleId"></param>
+            <param name="manufacturerId"></param>
+            <param name="modelId"></param>
+            <param name="lang"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CParts.Web.Controllers.PartsController.GetAnalogues(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="articleId"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

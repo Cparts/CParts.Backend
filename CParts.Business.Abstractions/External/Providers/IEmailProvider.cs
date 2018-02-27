@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace CParts.Business.Abstractions.ThirdParty.Providers
+namespace CParts.Business.Abstractions.External.Providers
 {
     public interface IEmailProvider
     {

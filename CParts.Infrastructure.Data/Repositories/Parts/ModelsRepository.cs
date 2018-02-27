@@ -18,7 +18,7 @@ namespace CParts.Infrastructure.Data.Repositories.Parts
         {
         }
 
-        public async Task<ICollection<Model>> GetByManufacturerAsync(int manufacturerId,
+        public async Task<PaginatedResult<Model>> GetByManufacturerAsync(int manufacturerId,
             int page = 1, int pageSize = 25, 
             Expression<Func<Model, IComparable>> sortOrder = null,
             OrderDirection sortDirection = OrderDirection.Ascending)
@@ -30,9 +30,16 @@ namespace CParts.Infrastructure.Data.Repositories.Parts
             if (sortOrder == null)
                 sortOrder = x => x.Id;
             
-            query = query.Paginate(sortOrder, sortDirection, page, pageSize).AsNoTracking();
+            return await query.PaginateAsync(pageSize, page, sortOrder, sortDirection);
+        }     
+        
+        public async Task<ICollection<Model>> GetByManufacturerAndYearAsync(int manufacturerId, int year)
+        {
+            var query = from model in DbSet
+                where model.ManufacturerId == manufacturerId && model.PconStart / 100 < year && year < model.PconEnd / 100
+                select model;
 
-            return await query.ToListAsync();
+            return await query.AsNoTracking().ToListAsync();
         }
     }
 }

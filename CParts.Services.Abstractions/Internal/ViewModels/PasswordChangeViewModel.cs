@@ -6,6 +6,5 @@ namespace CParts.Services.Abstractions.Internal.ViewModels
     {
         public string OldPassword { get; set; }
         public string NewPassword { get; set; }
-        public ApplicationUser User { get; set; }
     }
 }

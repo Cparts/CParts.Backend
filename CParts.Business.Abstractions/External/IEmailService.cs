@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace CParts.Business.Abstractions.ThirdParty
+namespace CParts.Business.Abstractions.External
 {
     public interface IEmailService
     {

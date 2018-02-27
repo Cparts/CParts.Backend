@@ -24,21 +24,54 @@ namespace CParts.Infrastructure.Services.Parts
             return await _carSelectionService.GetManufacturersAsync();
         }
 
-        public async Task<ICollection<ModelViewModel>> GetModelsByManufacturerAsync(int manufacturerId, int page = 1, int languageId = 4)
+        public async Task<SearchThirdStepViewModel> GetModelsByManufacturerAsync(int manufacturerId, int page = 1, int languageId = 4)
         {
             var queryResult = await _carSelectionService.GetByManufacturerAsync(manufacturerId, page, languageId);
-            return queryResult.Select(x => new ModelViewModel
+            var models = queryResult.PageContent.Select(x => new ModelsViewModel
             {
                 Description = x.CountryDesignation.Text.Text,
                 Id = x.Id,
                 ProductionStartDate = GetPconDate(x.PconStart),
                 ProductionEndDate = GetPconDate(x.PconEnd)
             }).ToList();
+            //TODO: Fix this (return proper model instead of search VM)
+            return new SearchThirdStepViewModel();
+        }
+        
+        public async Task<SearchThirdStepViewModel> GetModelsByManufacturerAndYearAsync(int manufacturerId, int year, int languageId = 4)
+        {
+            var queryResult = await _carSelectionService.GetByManufacturerAndYearAsync(manufacturerId, year, languageId);
+            var models = queryResult.Models.Select(x => new ModelsViewModel
+            {
+                Description = x.CountryDesignation.Text.Text,
+                Id = x.Id,
+                ProductionStartDate = GetPconDate(x.PconStart),
+                ProductionEndDate = GetPconDate(x.PconEnd)
+            }).OrderBy(x => x.Description).ToList();
+            return new SearchThirdStepViewModel
+            {
+                ManufacturerId = queryResult.Manufacturer.Id,
+                ManufacturerName = queryResult.Manufacturer.Brand,
+                Models = models
+            };
         }
 
-        public async Task<ICollection<Type>> GetTypesByModelAsync(int modelId, int languageId = 4)
+        public async Task<SearchFourthStepViewModel> GetTypesByModelAsync(int modelId, int languageId = 4)
         {
-            return await _carSelectionService.GetByModelAsync(modelId,languageId);
+            //TODO: Swap it to proper viewmodel
+            var types = (await _carSelectionService.GetByModelAsync(modelId,languageId)).Select(x => new CarType
+            {
+                BodyType = x.Type.KvBodyDesignation.Text.Text,
+                EngineCode = x.Engine.Code,
+                EngineVolume = x.Engine.LitresFrom
+                               ?? 0, 
+                FullEngineDescription = x.Engine.KvEngineDesignation?.Text.Text,
+                FuelType = x.Engine.KvFuelTypeDesignation?.Text.Text ?? "None",
+                HpPower = x.Engine.HpUpto ?? 0,
+                KwPower = x.Engine.KwUpto ?? 0
+            }).ToList();
+            
+            return new SearchFourthStepViewModel{ Types = types};
         }
 
         private DateTime GetPconDate(int? pcon)

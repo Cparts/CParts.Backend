@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace CParts.Framework
 {
@@ -43,23 +45,51 @@ namespace CParts.Framework
             }
         }
 
-        public static IQueryable<TEntity> Paginate<TEntity>(this IQueryable<TEntity> dbSet,
-            Expression<Func<TEntity, IComparable>> keySelector, 
-            OrderDirection direction = OrderDirection.Ascending,
-            int page = 1,
-            int pageSize = int.MaxValue)
+        public static IOrderedQueryable<TEntity> OrderBy<TEntity>(this IQueryable<TEntity> dbSet,
+            Expression<Func<TEntity, IComparable>> keySelector,
+            OrderDirection direction)
         {
+            IOrderedQueryable<TEntity> resultingSequence;
+            
             if (direction == OrderDirection.Ascending)
             {
-                dbSet.OrderBy(keySelector);
+                resultingSequence = dbSet.OrderBy(keySelector);
             }
             else
             {
-                dbSet.OrderByDescending(keySelector);
+                resultingSequence = dbSet.OrderByDescending(keySelector);
             }
-            
-            return dbSet.Skip((page - 1) * pageSize).Take(pageSize);
+
+            return resultingSequence;
         }
+
+        public static async Task<PaginatedResult<TEntity>> PaginateAsync<TEntity>(this IQueryable<TEntity> query,
+            int pageSize, int pageNumber,
+            Expression<Func<TEntity, IComparable>> orderKeySelector,
+            OrderDirection orderDirection) where TEntity : class
+        {
+            var elementOffset = (pageNumber - 1) * pageSize;
+            var totalCount = await query.CountAsync();
+            var orderedQuery = query.OrderBy(orderKeySelector, orderDirection);
+            var pageContents = await orderedQuery.Skip(elementOffset).Take(pageSize).AsNoTracking().ToListAsync();
+            var result = new PaginatedResult<TEntity>
+            {
+                TotalCount = totalCount,
+                PageSize = pageSize,
+                PageNumber = pageNumber,
+                PageContent = pageContents
+            };
+
+            return result;
+        }
+    }
+
+    public class PaginatedResult<TResult>
+    {
+        public int TotalCount { get; set; }
+        public int PageSize { get; set; }
+        public int PageNumber { get; set; }
+        public ICollection<TResult> PageContent { get; set; }
     }
 
     public enum OrderDirection

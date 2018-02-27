@@ -28,13 +28,17 @@ namespace CParts.Web.Controllers
             return Ok(await _authorizationServiceMapper.RegisterUserAsync(registerModel));
         }
 
+        [HttpPost]
         [Authorize]
+        [Route("changepassword")]
         public async Task<IActionResult> ChangePassword([FromBody] PasswordChangeViewModel passwordChangeViewModel)
         {
             throw new NotImplementedException();
         }
 
+        [HttpPost]
         [Authorize]
+        [Route("forgotpassword")]
         public async Task<IActionResult> ForgotPassword([FromBody] ForgottenPasswordViewModel forgotPasswordModel)
         {
             if (!ModelState.IsValid)

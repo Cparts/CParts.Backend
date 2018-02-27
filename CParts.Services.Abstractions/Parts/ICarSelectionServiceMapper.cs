@@ -8,8 +8,11 @@ namespace CParts.Services.Abstractions.Parts
     public interface ICarSelectionServiceMapper
     {
         Task<ICollection<Manufacturer>> GetAllManufacturerAsync();
-        Task<ICollection<ModelViewModel>> GetModelsByManufacturerAsync(int manufacturerId, int page = 1, int languageId = 4);
-        Task<ICollection<Type>> GetTypesByModelAsync(int modelId, int languageId = 4);
+        Task<SearchThirdStepViewModel> GetModelsByManufacturerAsync(int manufacturerId, int page = 1, int languageId = 4);
+        Task<SearchFourthStepViewModel> GetTypesByModelAsync(int modelId, int languageId = 4);
+
+        Task<SearchThirdStepViewModel> GetModelsByManufacturerAndYearAsync(int manufacturerId, int year,
+            int languageId = 4);
 
     }
 }

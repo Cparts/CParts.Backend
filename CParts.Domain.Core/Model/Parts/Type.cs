@@ -22,7 +22,7 @@ namespace CParts.Domain.Core.Model.Parts
         /// </summary>
         public int? MmtCountryDesignationId { get; set; }
 
-        [NotMapped] public ICollection<CountryDesignation> MmtCountryDesignations { get; set; }
+        [NotMapped] public CountryDesignation MmtCountryDesignation { get; set; }
 
         /// <summary>
         /// TYP_MOD_ID

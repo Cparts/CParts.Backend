@@ -32,7 +32,7 @@ namespace CParts.Infrastructure.Data.Repositories.Parts.Base
         {
         }
 
-        public async Task<ICollection<TEntity>> AppendDesignationsToCollection<TEntity>(
+        public async Task<ICollection<TEntity>> AppendDesignationsToCollectionAsync<TEntity>(
             ICollection<TEntity> entityCollection,
             int languageId = 4)
         {

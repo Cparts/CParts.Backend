@@ -1,5 +1,6 @@
 ﻿using CParts.Domain.Abstractions.Contexts;
 using CParts.Domain.Core.Model.Parts;
+using CParts.Domain.Core.Model.Parts.Additional;
 using CParts.Domain.Core.Model.Parts.Links;
 using Microsoft.EntityFrameworkCore;
 
@@ -38,6 +39,8 @@ namespace CParts.Infrastructure.Data.Contexts
         public virtual DbSet<TextModuleText> TextModuleTexts { get; set; }
         public virtual DbSet<TypeNumber> TypeNumbers { get; set; }
         public virtual DbSet<Type> Types { get; set; }
+        public virtual DbSet<FullTypeIdentifier> FullTypeIdentifiers { get; set; }
+        public virtual DbSet<SearchTreeName> SearchTreeNames { get; set; }
 
         public PartsDataDbContext(DbContextOptions<PartsDataDbContext> options) : base(options)
         {
@@ -55,6 +58,59 @@ namespace CParts.Infrastructure.Data.Contexts
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            //TODO: Maybe will be removed further
+            modelBuilder.Entity<FullTypeIdentifier>(entity =>
+            {
+                entity.ToTable("FULL_TYPE_IDENTIFIER");
+                entity.HasKey(e => e.Id);
+
+                entity.HasIndex(e => e.FullIdentifier)
+                    .HasName("fts_idx");
+                
+                entity.Property(e => e.Id)
+                    .HasColumnName("FTP_ID")
+                    .HasColumnType("int(11)");
+                
+                entity.Property(e => e.FullIdentifier)
+                    .HasColumnName("FTP_FULL_IDENTIFIER")
+                    .HasColumnType("text");
+                
+                entity.Property(e => e.ManufacturerId)
+                    .HasColumnName("FTP_MFA_ID")
+                    .HasColumnType("int(11)");
+                
+                entity.Property(e => e.ModelId)
+                    .HasColumnName("FTP_MOD_ID")
+                    .HasColumnType("int(11)");
+                
+                entity.Property(e => e.TypeId)
+                    .HasColumnName("FTP_TYP_ID")
+                    .HasColumnType("int(11)");
+
+                entity.HasOne(e => e.Type).WithMany().HasForeignKey(e => e.TypeId);
+                entity.HasOne(e => e.Model).WithMany().HasForeignKey(e => e.ModelId);
+                entity.HasOne(e => e.Manufacturer).WithMany().HasForeignKey(e => e.ManufacturerId);
+            });       
+            
+            modelBuilder.Entity<SearchTreeName>(entity =>
+            {
+                entity.ToTable("SEARCH_TREE_NAME");
+                entity.HasKey(e => e.SearchTreeId);
+
+                entity.HasIndex(e => e.Name)
+                    .HasName("fdx_idx");
+                
+                entity.Property(e => e.SearchTreeId)
+                    .HasColumnName("STR_ID")
+                    .HasColumnType("int(11)");
+                
+                entity.Property(e => e.Name)
+                    .HasColumnName("TEX_TEXT")
+                    .HasColumnType("text");
+                
+                entity.HasOne(e => e.SearchTree).WithMany().HasForeignKey(e => e.SearchTreeId);
+            });
+
             modelBuilder.Entity<CountryDesignation>(entity =>
             {
                 entity.ToTable("COUNTRY_DESIGNATIONS");
@@ -84,7 +140,7 @@ namespace CParts.Infrastructure.Data.Contexts
 
                 entity.HasIndex(e => e.KvDesignationId)
                     .HasName("ACR_KV_DES_ID");
-                
+
                 entity.HasIndex(e => e.Value)
                     .HasName("ACR_VALUE");
 
@@ -118,12 +174,19 @@ namespace CParts.Infrastructure.Data.Contexts
                 entity.Property(e => e.Value)
                     .HasColumnName("ACR_VALUE")
                     .HasMaxLength(60);
-
             });
 
             modelBuilder.Entity<ArticleInfo>(entity =>
             {
-                entity.HasKey(e => new {e.ArticleId, AinGaId = e.GaId, AinSort = e.Sort, AinKvType = e.KvType, e.AinDisplay, AinTmoId = e.TextModuleId});
+                entity.HasKey(e => new
+                {
+                    e.ArticleId,
+                    AinGaId = e.GaId,
+                    AinSort = e.Sort,
+                    AinKvType = e.KvType,
+                    e.AinDisplay,
+                    AinTmoId = e.TextModuleId
+                });
 
                 entity.ToTable("ARTICLE_INFO");
 
@@ -168,7 +231,7 @@ namespace CParts.Infrastructure.Data.Contexts
 
                 entity.HasIndex(e => e.CompleteDesignationId)
                     .HasName("ART_COMPLETE_DES_ID");
-                
+
                 entity.HasIndex(e => e.DesignationId)
                     .HasName("ART_DES_ID");
 
@@ -528,17 +591,20 @@ namespace CParts.Infrastructure.Data.Contexts
                 entity.Property(e => e.KvControlDesignationId)
                     .HasColumnName("ENG_KV_CONTROL_DES_ID")
                     .HasColumnType("int(11)");
-                entity.HasOne(e => e.KvControlDesignation).WithOne().HasForeignKey<Engine>(e => e.KvControlDesignationId);
+                entity.HasOne(e => e.KvControlDesignation).WithOne()
+                    .HasForeignKey<Engine>(e => e.KvControlDesignationId);
 
                 entity.Property(e => e.KvCoolingDesignationId)
                     .HasColumnName("ENG_KV_COOLING_DES_ID")
                     .HasColumnType("int(11)");
-                entity.HasOne(e => e.KvCoolingDesignation).WithOne().HasForeignKey<Engine>(e => e.KvCoolingDesignationId);
+                entity.HasOne(e => e.KvCoolingDesignation).WithOne()
+                    .HasForeignKey<Engine>(e => e.KvCoolingDesignationId);
 
                 entity.Property(e => e.KvCylindersDesignationId)
                     .HasColumnName("ENG_KV_CYLINDERS_DES_ID")
                     .HasColumnType("int(11)");
-                entity.HasOne(e => e.KvCylindersDesignation).WithOne().HasForeignKey<Engine>(e => e.KvCylindersDesignationId);
+                entity.HasOne(e => e.KvCylindersDesignation).WithOne()
+                    .HasForeignKey<Engine>(e => e.KvCylindersDesignationId);
 
                 entity.Property(e => e.KvDesignDesignationId)
                     .HasColumnName("ENG_KV_DESIGN_DES_ID")
@@ -553,17 +619,20 @@ namespace CParts.Infrastructure.Data.Contexts
                 entity.Property(e => e.KvFuelSupplyDesignationId)
                     .HasColumnName("ENG_KV_FUEL_SUPPLY_DES_ID")
                     .HasColumnType("int(11)");
-                entity.HasOne(e => e.KvFuelSupplyDesignation).WithOne().HasForeignKey<Engine>(e => e.KvFuelSupplyDesignationId);
+                entity.HasOne(e => e.KvFuelSupplyDesignation).WithOne()
+                    .HasForeignKey<Engine>(e => e.KvFuelSupplyDesignationId);
 
                 entity.Property(e => e.KvFuelTypeDesignationId)
                     .HasColumnName("ENG_KV_FUEL_TYPE_DES_ID")
                     .HasColumnType("int(11)");
-                entity.HasOne(e => e.KvFuelTypeDesignation).WithOne().HasForeignKey<Engine>(e => e.KvFuelTypeDesignationId);
+                entity.HasOne(e => e.KvFuelTypeDesignation).WithOne()
+                    .HasForeignKey<Engine>(e => e.KvFuelTypeDesignationId);
 
                 entity.Property(e => e.KvGasNormDesignationId)
                     .HasColumnName("ENG_KV_GAS_NORM_DES_ID")
                     .HasColumnType("int(11)");
-                entity.HasOne(e => e.KvGasNormDesignation).WithOne().HasForeignKey<Engine>(e => e.KvGasNormDesignationId);
+                entity.HasOne(e => e.KvGasNormDesignation).WithOne()
+                    .HasForeignKey<Engine>(e => e.KvGasNormDesignationId);
 
                 entity.Property(e => e.KvUseDesignationId)
                     .HasColumnName("ENG_KV_USE_DES_ID")
@@ -573,7 +642,8 @@ namespace CParts.Infrastructure.Data.Contexts
                 entity.Property(e => e.KvValveControlDesignationId)
                     .HasColumnName("ENG_KV_VALVE_CONTROL_DES_ID")
                     .HasColumnType("int(11)");
-                entity.HasOne(e => e.KvValveControlDesignation).WithOne().HasForeignKey<Engine>(e => e.KvValveControlDesignationId);
+                entity.HasOne(e => e.KvValveControlDesignation).WithOne()
+                    .HasForeignKey<Engine>(e => e.KvValveControlDesignationId);
 
                 entity.Property(e => e.KwFrom)
                     .HasColumnName("ENG_KW_FROM")
@@ -650,7 +720,7 @@ namespace CParts.Infrastructure.Data.Contexts
 
                 entity.Property(e => e.DesignationId)
                     .HasColumnName("GRA_DES_ID")
-                    .HasColumnType("int(11)");                
+                    .HasColumnType("int(11)");
                 entity.HasOne(e => e.Designation).WithMany().HasForeignKey(e => e.DesignationId);
 
                 entity.Property(e => e.GraDocType)
@@ -910,7 +980,7 @@ namespace CParts.Infrastructure.Data.Contexts
                     .HasColumnType("smallint(6)");
             });
 
-            
+
             modelBuilder.Entity<Model>(entity =>
             {
                 entity.HasKey(e => e.Id);
@@ -943,7 +1013,7 @@ namespace CParts.Infrastructure.Data.Contexts
                     .HasColumnName("MOD_MFA_ID")
                     .HasColumnType("smallint(6)");
                 entity.HasOne(e => e.Manufacturer).WithMany().HasForeignKey(e => e.ManufacturerId);
-                
+
                 entity.Property(e => e.Pc)
                     .HasColumnName("MOD_PC")
                     .HasColumnType("smallint(6)");
@@ -1003,7 +1073,8 @@ namespace CParts.Infrastructure.Data.Contexts
 
             modelBuilder.Entity<SupplierAddress>(entity =>
             {
-                entity.HasKey(e => new {SadSupId = e.SupplierId, SadTypeOfAddress = e.TypeOfAddress, SadCouId = e.CountryId});
+                entity.HasKey(e =>
+                    new {SadSupId = e.SupplierId, SadTypeOfAddress = e.TypeOfAddress, SadCouId = e.CountryId});
 
                 entity.ToTable("SUPPLIER_ADDRESSES");
 
@@ -1183,7 +1254,15 @@ namespace CParts.Infrastructure.Data.Contexts
             modelBuilder.Entity<TypeNumber>(entity =>
             {
                 entity.HasKey(e =>
-                    new {TynTypId = e.TypeId, TynSearchText = e.SearchText, TynKind = e.Kind, TynDisplayNr = e.DisplayNumber, TynGopNr = e.GopNumber, TynGopStart = e.GopStart});
+                    new
+                    {
+                        TynTypId = e.TypeId,
+                        TynSearchText = e.SearchText,
+                        TynKind = e.Kind,
+                        TynDisplayNr = e.DisplayNumber,
+                        TynGopNr = e.GopNumber,
+                        TynGopStart = e.GopStart
+                    });
 
                 entity.ToTable("TYPE_NUMBERS");
 
@@ -1286,17 +1365,20 @@ namespace CParts.Infrastructure.Data.Contexts
                 entity.Property(e => e.KvBrakeSystemDesignationId)
                     .HasColumnName("TYP_KV_BRAKE_SYST_DES_ID")
                     .HasColumnType("int(11)");
-                entity.HasOne(e => e.KvBrakeSystemDesignation).WithOne().HasForeignKey<Type>(e => e.KvBrakeSystemDesignationId);
+                entity.HasOne(e => e.KvBrakeSystemDesignation).WithOne()
+                    .HasForeignKey<Type>(e => e.KvBrakeSystemDesignationId);
 
                 entity.Property(e => e.KvBrakeTypeDesignationId)
                     .HasColumnName("TYP_KV_BRAKE_TYPE_DES_ID")
                     .HasColumnType("int(11)");
-                entity.HasOne(e => e.KvBrakeTypeDisignation).WithOne().HasForeignKey<Type>(e => e.KvBrakeTypeDesignationId);
+                entity.HasOne(e => e.KvBrakeTypeDisignation).WithOne()
+                    .HasForeignKey<Type>(e => e.KvBrakeTypeDesignationId);
 
                 entity.Property(e => e.KvCatalystDesignationId)
                     .HasColumnName("TYP_KV_CATALYST_DES_ID")
                     .HasColumnType("int(11)");
-                entity.HasOne(e => e.KvCatalystDesignation).WithOne().HasForeignKey<Type>(e => e.KvCatalystDesignationId);
+                entity.HasOne(e => e.KvCatalystDesignation).WithOne()
+                    .HasForeignKey<Type>(e => e.KvCatalystDesignationId);
 
                 entity.Property(e => e.KvDriveDesignationId)
                     .HasColumnName("TYP_KV_DRIVE_DES_ID")
@@ -1316,7 +1398,8 @@ namespace CParts.Infrastructure.Data.Contexts
                 entity.Property(e => e.KvFuelSupplyDesignationId)
                     .HasColumnName("TYP_KV_FUEL_SUPPLY_DES_ID")
                     .HasColumnType("int(11)");
-                entity.HasOne(e => e.KvFuelSupplyDesignation).WithOne().HasForeignKey<Type>(e => e.KvFuelSupplyDesignationId);
+                entity.HasOne(e => e.KvFuelSupplyDesignation).WithOne()
+                    .HasForeignKey<Type>(e => e.KvFuelSupplyDesignationId);
 
                 entity.Property(e => e.KvModelDesignationId)
                     .HasColumnName("TYP_KV_MODEL_DES_ID")
@@ -1326,12 +1409,14 @@ namespace CParts.Infrastructure.Data.Contexts
                 entity.Property(e => e.KvSteeringDesignationId)
                     .HasColumnName("TYP_KV_STEERING_DES_ID")
                     .HasColumnType("int(11)");
-                entity.HasOne(e => e.KvSteeringDesignation).WithOne().HasForeignKey<Type>(e => e.KvSteeringDesignationId);
+                entity.HasOne(e => e.KvSteeringDesignation).WithOne()
+                    .HasForeignKey<Type>(e => e.KvSteeringDesignationId);
 
                 entity.Property(e => e.KvSteeringSideDesignationId)
                     .HasColumnName("TYP_KV_STEERING_SIDE_DES_ID")
                     .HasColumnType("int(11)");
-                entity.HasOne(e => e.KvSteeringSideDesignation).WithOne().HasForeignKey<Type>(e => e.KvSteeringSideDesignationId);
+                entity.HasOne(e => e.KvSteeringSideDesignation).WithOne()
+                    .HasForeignKey<Type>(e => e.KvSteeringSideDesignationId);
 
                 entity.Property(e => e.KvTransDesignationId)
                     .HasColumnName("TYP_KV_TRANS_DES_ID")

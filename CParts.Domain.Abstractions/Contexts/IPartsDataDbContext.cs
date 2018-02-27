@@ -1,5 +1,6 @@
 ﻿using CParts.Domain.Abstractions.Contexts.Base;
 using CParts.Domain.Core.Model.Parts;
+using CParts.Domain.Core.Model.Parts.Additional;
 using CParts.Domain.Core.Model.Parts.Links;
 using Microsoft.EntityFrameworkCore;
 
@@ -37,5 +38,7 @@ namespace CParts.Domain.Abstractions.Contexts
         DbSet<TextModuleText> TextModuleTexts { get; set; }
         DbSet<TypeNumber> TypeNumbers { get; set; }
         DbSet<Type> Types { get; set; }
+        DbSet<FullTypeIdentifier> FullTypeIdentifiers { get; set; }
+        DbSet<SearchTreeName> SearchTreeNames { get; set; }
     }
 }

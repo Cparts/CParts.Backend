@@ -66,10 +66,10 @@ namespace CParts.Infrastructure.Services.Internal
             };
         }
 
-        public async Task<ChangePasswordResultViewModel> ChangeUsersPasswordAsync(PasswordChangeViewModel model)
+        public async Task<ChangePasswordResultViewModel> ChangeUsersPasswordAsync(PasswordChangeViewModel model, ApplicationUser user)
         {
             var passwordChangeResult =
-                await _authorizationService.ChangePasswordAsync(model.User, model.OldPassword, model.NewPassword);
+                await _authorizationService.ChangePasswordAsync(user, model.OldPassword, model.NewPassword);
 
 
             string errors = null;

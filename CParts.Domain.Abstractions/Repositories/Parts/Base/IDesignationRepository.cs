@@ -11,7 +11,7 @@ namespace CParts.Domain.Abstractions.Repositories.Parts.Base
         Task<TDesignationEntity> GetByIdAndLanguageAsync(int id, int languageId);
         Task<ICollection<TDesignationEntity>> GetByIdAndLanguageAsync(IEnumerable<int?> ids, int languageId);
 
-        Task<ICollection<TEntity>> AppendDesignationsToCollection<TEntity>(
+        Task<ICollection<TEntity>> AppendDesignationsToCollectionAsync<TEntity>(
             ICollection<TEntity> entityCollection,
             int languageId = 4);
     }

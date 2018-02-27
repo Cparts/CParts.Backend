@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Text;
+using CParts.Business.Abstractions.External;
+using CParts.Business.Abstractions.External.Providers;
 using CParts.Domain.Abstractions.Contexts;
 using CParts.Domain.Abstractions.Repositories.Parts;
 using CParts.Domain.Core.Model.Internal;
@@ -8,13 +10,11 @@ using CParts.Infrastructure.Data.Contexts;
 using CParts.Infrastructure.Data.Repositories.Parts;
 using CParts.Business.Abstractions.Internal;
 using CParts.Business.Abstractions.Parts;
-using CParts.Business.Abstractions.ThirdParty;
-using CParts.Business.Abstractions.ThirdParty.Providers;
 using CParts.Domain.Abstractions.Repositories.Internal;
+using CParts.Infrastructure.Business.External;
+using CParts.Infrastructure.Business.External.Providers;
 using CParts.Infrastructure.Business.Internal;
 using CParts.Infrastructure.Business.Parts;
-using CParts.Infrastructure.Business.ThirdParty;
-using CParts.Infrastructure.Business.ThirdParty.Providers;
 using CParts.Infrastructure.Data.Repositories.Internal;
 using CParts.Infrastructure.Services.Internal;
 using CParts.Infrastructure.Services.Parts;
@@ -116,6 +116,8 @@ namespace CParts.BootStrapper
             services.AddTransient<ISearchTreeRepository, SearchTreeRepository>();
             services.AddTransient<ITypesRepository, TypesRepository>();
             services.AddTransient<IApplicationUsersRepository, ApplicationUsersRepository>();
+            services.AddTransient<IFullIdentifiersRepository, FullIdentifiersRepository>();
+            services.AddTransient<IEnginesRepository, EnginesRepository>();
 
             //Links repositories
             services.AddTransient<IArticleLinkToTypeLinkRepository, ArticleLinkToTypeLinkRepository>();
